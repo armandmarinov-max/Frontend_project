@@ -18,15 +18,47 @@
     </section>
     // hier komt buttons om een speler toe te voegen.
     <section aria-labelledby="Post-Spelers-title">
-      <h2 id="Post-Spelers-title">GET alle Spelers</h2>
-      <div class="Get-Spelers">
-        <button id="load-spelers">Laad Spelers</button>
-        <input id="search" type="search" placeholder="Zoek op naam..." />
+      <h2 id="Post-Spelers-title">Voeg een Speler toe</h2>
+      <div class="Post-Spelers">
+        <button id="add-speler">voeg toe</button>
+        <input id="voornaam" type="text" placeholder="Geef een Voornaam" />
+        <input id="achternaam" type="text" placeholder="Geef een Achternaam" />
+        <input id="fide_id" type="number" placeholder="Geef een Fide ID" />
+        <input id="land" type="text" placeholder="Geef een Land" />
+        <input id="geslacht" type="text" placeholder="Geef een Geslacht" />
+        <input id="geboortejaar" type="number" placeholder="Geef een Geboortejaar" />
+        <span id="status" role="status" aria-live="polite"></span>
+      </div>
+      <div id="results" class="grid" aria-live="polite"></div>
+    </section>
+     // hier komt buttons om een speler te verwijderen.
+    <section aria-labelledby="Delete-Spelers-title">
+      <h2 id="Delete-Spelers-title">Verwijder een Speler</h2>
+      <div class="Delete-Spelers">
+        <button id="delete-speler">verwijder</button>
+        <input id="Id_van_speler" type="text" placeholder="Geef het ID van de speler" />
         <span id="status" role="status" aria-live="polite"></span>
       </div>
       <div id="results" class="grid" aria-live="polite"></div>
     </section>
     <script src="spelers.js"></script>
+    // hier komt buttons om een speler te updaten.
+    <section aria-labelledby="Put-Spelers-title">
+      <h2 id="Put-Spelers-title">Update een Speler</h2>
+      <div class="Put-Spelers">
+        <button id="update-speler">update</button>
+        <input id="naam" type="text" placeholder="naam" />
+        <input id="voornaam" type="text" placeholder="Geef een Voornaam" />
+        <input id="achternaam" type="text" placeholder="Geef een Achternaam" />
+        <input id="fide_id" type="number" placeholder="Geef een Fide ID" />
+        <input id="land" type="text" placeholder="Geef een Land" />
+        <input id="geslacht" type="text" placeholder="Geef een Geslacht" />
+        <input id="geboortejaar" type="number" placeholder="Geef een Geboortejaar" />
+        <span id="status" role="status" aria-live="polite"></span>
+      </div>
+      <div id="results" class="grid" aria-live="polite"></div>
+    </section>
+    
 
   </main>
 </body>
