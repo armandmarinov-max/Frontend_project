@@ -22,3 +22,34 @@ document.getElementById("load-klassement").addEventListener("click", function()
         })
         .catch(error => console.error('Error fetching data:', error));
 });
+//hier komt de post funtie voor klassement
+document.getElementById("add-klassement").addEventListener("click", function()
+{
+    const nieuweKlassement = {
+        klasssement_id: document.getElementById("klassemnt_id").value,
+        toernooi_id: document.getElementById("toernooi_id").value,
+        speler_id: document.getElementById("speler_id").value,
+        rondenummer: document.getElementById("rondenummer").value,
+        score: document.getElementById("score").value,
+        gelijkspelscore: document.getElementById("gelijkspelscore").value
+    };
+
+    fetch('localhost:5080/api/Klassement', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(nieuweKlassement)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Fout bij het toevoegen van de klassement');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Klassement toegevoegd:', data);
+            alert(`Klassement ${data.klassement}  succesvol toegevoegd!`);
+        })
+        .catch(error => console.error('Error posting data:', error));
+});
