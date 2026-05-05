@@ -22,3 +22,27 @@ document.getElementById("load-toernooien").addEventListener("click", function()
         })
         .catch(error => console.error('Error fetching data:', error));
 });
+// hier komt de post funtie voor toernooien
+document.getElementById("delete-toernooi").addEventListener("click", function() {
+    const toernooiId = document.getElementById("toernooi_id").value;
+
+    if (!toernooiId) {
+        alert("Geef een toernooi ID op.");
+        return;
+    }
+
+    fetch(`localhost:5080/api/Toernooi/${toernooiId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Fout bij het verwijderen van het toernooi');
+            }
+            console.log(`Toernooi met ID ${toernooiId} verwijderd`);
+            alert(`Toernooi met ID ${toernooiId} succesvol verwijderd!`);
+        })
+        .catch(error => console.error('Error deleting data:', error));
+});

@@ -54,3 +54,27 @@ document.getElementById("add-spel").addEventListener("click", function() {
         })
         .catch(error => console.error('Error posting data:', error));
 });
+//hier komt de delete van een spel
+document.getElementById("delete-spel").addEventListener("click", function() {
+    const spelId = document.getElementById("spel_id").value;
+
+    if (!spelId) {
+        alert("Geef een spel ID op.");
+        return;
+    }
+
+    fetch(`localhost:5080/api/Spel/${spelId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Fout bij het verwijderen van het spel');
+            }
+            console.log(`Spel met ID ${spelId} verwijderd`);
+            alert(`Spel met ID ${spelId} succesvol verwijderd!`);
+        })
+        .catch(error => console.error('Error deleting data:', error));
+});

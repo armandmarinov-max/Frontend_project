@@ -53,3 +53,27 @@ document.getElementById("add-klassement").addEventListener("click", function()
         })
         .catch(error => console.error('Error posting data:', error));
 });
+//hier komt de delete van een klassement
+document.getElementById("delete-klassement").addEventListener("click", function() {
+    const klassementId = document.getElementById("klassemnt_id").value;
+
+    if (!klassementId) {
+        alert("Geef een klassement ID op.");
+        return;
+    }
+
+    fetch(`localhost:5080/api/Klassement/${klassementId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Fout bij het verwijderen van het klassement');
+            }
+            console.log(`Klassement met ID ${klassementId} verwijderd`);
+            alert(`Klassement met ID ${klassementId} succesvol verwijderd!`);
+        })
+        .catch(error => console.error('Error deleting data:', error));
+});

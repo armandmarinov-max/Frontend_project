@@ -54,6 +54,30 @@ document.getElementById("add-speler").addEventListener("click", function()
         })
         .catch(error => console.error('Error posting data:', error));
 });
+//hier komt de delete van een speler
+document.getElementById("delete-speler").addEventListener("click", function() {
+    const spelerId = document.getElementById("Id_van_speler").value;
+
+    if (!spelerId) {
+        alert("Geef een speler ID op.");
+        return;
+    }
+
+    fetch(`localhost:5080/api/Spelers/${spelerId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Fout bij het verwijderen van de speler');
+            }
+            console.log(`Speler met ID ${spelerId} verwijderd`);
+            alert(`Speler met ID ${spelerId} succesvol verwijderd!`);
+        })
+        .catch(error => console.error('Error deleting data:', error));
+});
 
 
 

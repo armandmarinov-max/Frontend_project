@@ -46,3 +46,27 @@ document.getElementById("add-ronde").addEventListener("click", function() {
         })
         .catch(error => console.error('Error posting data:', error));
 });
+//hier komt de delete van een ronde
+document.getElementById("delete-ronde").addEventListener("click", function() {
+    const rondeId = document.getElementById("ronde_id").value;
+
+    if (!rondeId) {
+        alert("Geef een ronde ID op.");
+        return;
+    }
+
+    fetch(`localhost:5080/api/Rondes/${rondeId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Fout bij het verwijderen van de ronde');
+            }
+            console.log(`Ronde met ID ${rondeId} verwijderd`);
+            alert(`Ronde met ID ${rondeId} succesvol verwijderd!`);
+        })
+        .catch(error => console.error('Error deleting data:', error));
+});
