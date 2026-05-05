@@ -70,3 +70,37 @@ document.getElementById("delete-ronde").addEventListener("click", function() {
         })
         .catch(error => console.error('Error deleting data:', error));
 });
+//hier komt de update van een ronde
+document.getElementById("update-ronde").addEventListener("click", function() {
+    const rondeId = document.getElementById("update-ronde_id").value;
+
+    if (!rondeId) {
+        alert("Geef een ronde ID op.");
+        return;
+    }
+
+    const updatedRonde = {
+        ronde_id: rondeId,
+        toernooi_id: document.getElementById("update-toernooi_id").value,
+        rondenummer: document.getElementById("update-ronde_nummer").value
+    };
+
+    fetch(`localhost:5080/api/Rondes/${rondeId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedRonde)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Fout bij het updaten van de ronde');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(`Ronde met ID ${rondeId} geupdated:`, data);
+            alert(`Ronde met ID ${rondeId} succesvol geupdated!`);
+        })
+        .catch(error => console.error('Error updating data:', error));
+});

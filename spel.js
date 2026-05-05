@@ -78,3 +78,41 @@ document.getElementById("delete-spel").addEventListener("click", function() {
         })
         .catch(error => console.error('Error deleting data:', error));
 });
+//hier komt de update van een spel
+document.getElementById("update-spel").addEventListener("click", function() {
+    const spelId = document.getElementById("update-spel_id").value;
+
+    if (!spelId) {
+        alert("Geef een spel ID op.");
+        return;
+    }
+
+    const updatedSpel = {
+        spel_id: spelId,
+        toernooi_id: document.getElementById("update-toernooi_id").value,
+        ronde_id: document.getElementById("update-ronde_id").value,
+        white_speler: document.getElementById("update-White_speler").value,
+        black_speler: document.getElementById("update-Black_speler").value,
+        resultaat: document.getElementById("update-resultaat").value,
+        schaakbordnummer: document.getElementById("update-schaakbordnummer").value
+    };
+
+    fetch(`localhost:5080/api/Spel/${spelId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedSpel)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Fout bij het updaten van het spel');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(`Spel met ID ${spelId} geupdated:`, data);
+            alert(`Spel met ID ${spelId} succesvol geupdated!`);
+        })
+        .catch(error => console.error('Error updating data:', error));
+});

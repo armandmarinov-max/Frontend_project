@@ -77,3 +77,40 @@ document.getElementById("delete-klassement").addEventListener("click", function(
         })
         .catch(error => console.error('Error deleting data:', error));
 });
+//hier komt de update van een klassement
+document.getElementById("update-klassement").addEventListener("click", function() {
+    const klassementId = document.getElementById("update-klassemnt_id").value;
+
+    if (!klassementId) {
+        alert("Geef een klassement ID op.");
+        return;
+    }
+
+    const updatedKlassement = {
+        klassement_id: klassementId,
+        toernooi_id: document.getElementById("update-toernooi_id").value,
+        speler_id: document.getElementById("update-speler_id").value,
+        rondenummer: document.getElementById("update-rondenummer").value,
+        score: document.getElementById("update-score").value,
+        gelijkspelscore: document.getElementById("update-gelijkspelscore").value
+    };
+
+    fetch(`localhost:5080/api/Klassement/${klassementId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedKlassement)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Fout bij het updaten van het klassement');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(`Klassement met ID ${klassementId} geupdated:`, data);
+            alert(`Klassement met ID ${klassementId} succesvol geupdated!`);
+        })
+        .catch(error => console.error('Error updating data:', error));
+});

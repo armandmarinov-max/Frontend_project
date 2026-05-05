@@ -78,6 +78,44 @@ document.getElementById("delete-speler").addEventListener("click", function() {
         })
         .catch(error => console.error('Error deleting data:', error));
 });
+//hier komt de update van een speler
+document.getElementById("update-speler").addEventListener("click", function() {
+    const spelerId = document.getElementById("update-speler_id").value;
+
+    if (!spelerId) {
+        alert("Geef een speler ID op.");
+        return;
+    }
+
+    const updatedSpeler = {
+        speler_id: spelerId,
+        voornaam: document.getElementById("update-voornaam").value,
+        achternaam: document.getElementById("update-achternaam").value,
+        fide_id: document.getElementById("update-fide_id").value,
+        land: document.getElementById("update-land").value,
+        geslacht: document.getElementById("update-geslacht").value,
+        geboortejaar: document.getElementById("update-geboortejaar").value
+    };
+
+    fetch(`localhost:5080/api/Spelers/${spelerId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedSpeler)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Fout bij het updaten van de speler');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(`Speler met ID ${spelerId} geupdated:`, data);
+            alert(`Speler met ID ${spelerId} succesvol geupdated!`);
+        })
+        .catch(error => console.error('Error updating data:', error));
+});
 
 
 
