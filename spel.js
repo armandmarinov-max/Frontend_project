@@ -23,3 +23,34 @@ document.getElementById("load-spel").addEventListener("click", function()
         })
         .catch(error => console.error('Error fetching data:', error));
 });
+// hier komt de post funtie voor Spel
+document.getElementById("add-spel").addEventListener("click", function() {
+    const nieuwSpel = {
+        spel_id: document.getElementById("spel_id").value,
+        toernooi_id: document.getElementById("toernooi_id").value,
+        ronde_id: document.getElementById("ronde_id").value,
+        white_speler: document.getElementById("White_speler").value,
+        black_speler: document.getElementById("Black_speler").value,
+        resultaat: document.getElementById("resultaat").value,
+        schaakbordnummer: document.getElementById("schaakbordnummer").value
+    };
+
+    fetch('localhost:5080/api/Spel', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(nieuwSpel)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Fout bij het toevoegen van het spel');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Spel toegevoegd:', data);
+            alert(`Spel ${data.spel_id} succesvol toegevoegd!`);
+        })
+        .catch(error => console.error('Error posting data:', error));
+});
