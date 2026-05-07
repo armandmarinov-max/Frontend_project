@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Chess Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark: #0e0e0e;
+      --dark2: #1a1a1a;
+      --dark3: #242424;
+      --light: #f5f0e8;
+      --cream: #e8dfc8;
+      --gold: #c8a84b;
+      --gold-dim: #a07830;
+      --white-sq: #d4c49a;
+      --black-sq: #2c2416;
+      --text: #f5f0e8;
+      --text-dim: #9a8f78;
+      --border: rgba(200,168,75,0.2);
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Checkerboard background */
+    .bg-board {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+      opacity: 0.045;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .bg-board span:nth-child(odd) { background: var(--white-sq); }
+    .bg-board span:nth-child(even) { background: var(--black-sq); }
+    .bg-board span:nth-child(16n+2),.bg-board span:nth-child(16n+4),.bg-board span:nth-child(16n+6),.bg-board span:nth-child(16n+8),
+    .bg-board span:nth-child(16n+9),.bg-board span:nth-child(16n+11),.bg-board span:nth-child(16n+13),.bg-board span:nth-child(16n+15) {
+      background: var(--black-sq);
+    }
+    .bg-board span:nth-child(16n+1),.bg-board span:nth-child(16n+3),.bg-board span:nth-child(16n+5),.bg-board span:nth-child(16n+7),
+    .bg-board span:nth-child(16n+10),.bg-board span:nth-child(16n+12),.bg-board span:nth-child(16n+14),.bg-board span:nth-child(16n+16) {
+      background: var(--white-sq);
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 680px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      animation: fadeDown 0.6s ease both;
+    }
+
+    .king-icon {
+      font-size: 3rem;
+      line-height: 1;
+      opacity: 0.9;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--gold);
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    .divider {
+      width: 120px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin-top: 0.25rem;
+    }
+
+    /* Buttons grid */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      width: 100%;
+      animation: fadeUp 0.7s ease 0.15s both;
+    }
+
+    .btn-card {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.6rem;
+      padding: 1.4rem 1.25rem;
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--text);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    }
+
+    .btn-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(200,168,75,0.06) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .btn-card:hover {
+      border-color: var(--gold);
+      background: var(--dark3);
+      transform: translateY(-2px);
+    }
+
+    .btn-card:hover::before { opacity: 1; }
+
+    .btn-card:active { transform: translateY(0) scale(0.99); }
+
+    /* corner accent */
+    .btn-card::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 28px; height: 28px;
+      border-top: 2px solid var(--gold-dim);
+      border-right: 2px solid var(--gold-dim);
+      border-top-right-radius: 4px;
+      opacity: 0.4;
+      transition: opacity 0.2s;
+    }
+    .btn-card:hover::after { opacity: 1; }
+
+    .btn-card.wide {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .piece {
+      font-size: 1.6rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .btn-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--cream);
+      margin: 0;
+    }
+
+    .btn-desc {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    .arrow {
+      margin-left: auto;
+      font-size: 1rem;
+      color: var(--gold);
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: opacity 0.2s, transform 0.2s;
+      flex-shrink: 0;
+    }
+    .btn-card:hover .arrow { opacity: 1; transform: translateX(0); }
+
+    /* stagger animation */
+    .btn-card:nth-child(1) { animation: fadeUp 0.5s ease 0.2s both; }
+    .btn-card:nth-child(2) { animation: fadeUp 0.5s ease 0.28s both; }
+    .btn-card:nth-child(3) { animation: fadeUp 0.5s ease 0.36s both; }
+    .btn-card:nth-child(4) { animation: fadeUp 0.5s ease 0.44s both; }
+    .btn-card:nth-child(5) { animation: fadeUp 0.5s ease 0.52s both; }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      animation: fadeUp 0.5s ease 0.6s both;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-board" aria-hidden="true">
+    <script>
+      (function(){
+        var b = document.querySelector('.bg-board');
+        for(var i=0;i<64;i++) b.appendChild(document.createElement('span'));
+      })();
+    </script>
+  </div>
+
+  <div class="container">
+
+    <header>
+      <div class="king-icon">♔</div>
+      <h1>Admin control board</h1>
+      <p class="subtitle">Chess match management</p>
+      <div class="divider"></div>
+    </header>
+
+    <nav class="grid" aria-label="Admin editing pages">
+
+      <a class="btn-card" href="edit-players.html">
+        <div class="piece">♟</div>
+        <div>
+          <p class="btn-label">Players</p>
+          <p class="btn-desc">Manage player records</p>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a class="btn-card" href="edit-matches.html">
+        <div class="piece">♞</div>
+        <div>
+          <p class="btn-label">Matches</p>
+          <p class="btn-desc">Edit match results</p>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a class="btn-card" href="edit-tournaments.html">
+        <div class="piece">♛</div>
+        <div>
+          <p class="btn-label">Tournaments</p>
+          <p class="btn-desc">Set up & edit events</p>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a class="btn-card" href="edit-rankings.html">
+        <div class="piece">♜</div>
+        <div>
+          <p class="btn-label">Rankings</p>
+          <p class="btn-desc">Update standings</p>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a class="btn-card wide" href="edit-openings.html">
+        <div class="piece">♝</div>
+        <div>
+          <p class="btn-label">Openings</p>
+          <p class="btn-desc">Manage opening library</p>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+    </nav>
+
+    <footer>Restricted access &nbsp;·&nbsp; Authorized personnel only</footer>
+
+  </div>
+
+</body>
+</html>
