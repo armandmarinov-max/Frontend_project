@@ -1,6 +1,6 @@
 // ── CONFIG ──────────────────────────────────────────────
 // Change this to your actual ASP.NET API URL
-const API_URL = "localhost:5080/api/Admin/login";
+const API_URL = "http://localhost:5080/api/Admin/login";
 // ────────────────────────────────────────────────────────
 
 // Allow Enter key to submit
