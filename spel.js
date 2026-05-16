@@ -1,7 +1,7 @@
 // De Get methode voor Spel code wanneer pagina inleadt
 document.getElementById("load-spel").addEventListener("click", function()
 {
-    fetch('localhost:5080/api/spel')
+    fetch('http://localhost:5080/api/spel')
         .then(response => response.json())
         .then(data => {
             let results = document.getElementById("results");
@@ -26,16 +26,15 @@ document.getElementById("load-spel").addEventListener("click", function()
 // hier komt de post funtie voor Spel
 document.getElementById("add-spel").addEventListener("click", function() {
     const nieuwSpel = {
-        spel_id: document.getElementById("spel_id").value,
-        toernooi_id: document.getElementById("toernooi_id").value,
-        ronde_id: document.getElementById("ronde_id").value,
-        white_speler: document.getElementById("White_speler").value,
-        black_speler: document.getElementById("Black_speler").value,
-        resultaat: document.getElementById("resultaat").value,
-        schaakbordnummer: document.getElementById("schaakbordnummer").value
+    toernooiId: parseInt(document.getElementById("toernooi_id").value),
+    rondeId: parseInt(document.getElementById("ronde_id").value),
+    whiteSpelerId: parseInt(document.getElementById("White_speler").value),
+    blackSpelerId: parseInt(document.getElementById("Black_speler").value),
+    resultaat: document.getElementById("resultaat").value,
+    schaakbordNummer: parseInt(document.getElementById("schaakbordnummer").value)
     };
 
-    fetch('localhost:5080/api/Spel', {
+    fetch('http://localhost:5080/api/Spel', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -56,14 +55,14 @@ document.getElementById("add-spel").addEventListener("click", function() {
 });
 //hier komt de delete van een spel
 document.getElementById("delete-spel").addEventListener("click", function() {
-    const spelId = document.getElementById("spel_id").value;
+    const spelId = document.getElementById("delete-spel_id").value;
 
     if (!spelId) {
         alert("Geef een spel ID op.");
         return;
     }
 
-    fetch(`localhost:5080/api/Spel/${spelId}`, {
+    fetch(`http://localhost:5080/api/Spel/${spelId}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
@@ -88,31 +87,26 @@ document.getElementById("update-spel").addEventListener("click", function() {
     }
 
     const updatedSpel = {
-        spel_id: spelId,
-        toernooi_id: document.getElementById("update-toernooi_id").value,
-        ronde_id: document.getElementById("update-ronde_id").value,
-        white_speler: document.getElementById("update-White_speler").value,
-        black_speler: document.getElementById("update-Black_speler").value,
-        resultaat: document.getElementById("update-resultaat").value,
-        schaakbordnummer: document.getElementById("update-schaakbordnummer").value
-    };
+    spelId: spelId,
+    toernooiId: document.getElementById("update-toernooi_id").value,
+    rondeId: document.getElementById("update-ronde_id").value,
+    whiteSpelerId: document.getElementById("update-White_speler").value,
+    blackSpelerId: document.getElementById("update-Black_speler").value,
+    resultaat: document.getElementById("update-resultaat").value,
+    schaakbordNummer: document.getElementById("update-schaakbordnummer").value
+};
 
-    fetch(`localhost:5080/api/Spel/${spelId}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updatedSpel)
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Fout bij het updaten van het spel');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log(`Spel met ID ${spelId} geupdated:`, data);
-            alert(`Spel met ID ${spelId} succesvol geupdated!`);
-        })
-        .catch(error => console.error('Error updating data:', error));
+fetch(`http://localhost:5080/api/Spel/${spelId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updatedSpel)
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error('Fout bij het updaten van het spel');
+    }
+    // ✅ Geen .json() want backend geeft NoContent() terug
+    alert(`Spel met ID ${spelId} succesvol geupdated!`);
+})
+.catch(error => console.error('Error updating data:', error));
 });

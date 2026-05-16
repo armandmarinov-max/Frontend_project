@@ -1,7 +1,7 @@
 // De Get methode voor klassement code wanneer pagina inleadt
 document.getElementById("load-klassement").addEventListener("click", function()
 {
-    fetch('localhost:5080/api/klassement')
+    fetch('http://localhost:5080/api/klassement')
         .then(response => response.json())
         .then(data => {
             let results = document.getElementById("results");
@@ -34,7 +34,7 @@ document.getElementById("add-klassement").addEventListener("click", function()
         gelijkspelscore: document.getElementById("gelijkspelscore").value
     };
 
-    fetch('localhost:5080/api/Klassement', {
+    fetch('http://localhost:5080/api/Klassement', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -62,7 +62,7 @@ document.getElementById("delete-klassement").addEventListener("click", function(
         return;
     }
 
-    fetch(`localhost:5080/api/Klassement/${klassementId}`, {
+    fetch(`http://localhost:5080/api/Klassement/${klassementId}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
@@ -95,7 +95,7 @@ document.getElementById("update-klassement").addEventListener("click", function(
         gelijkspelscore: document.getElementById("update-gelijkspelscore").value
     };
 
-    fetch(`localhost:5080/api/Klassement/${klassementId}`, {
+    fetch(`http://localhost:5080/api/Klassement/${klassementId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'

@@ -1,7 +1,7 @@
 // De Get methode voor spelers code wanneer pagina inleadt
 document.getElementById("load-spelers").addEventListener("click", function()
 {
-    fetch('localhost:5080/api/Speler')
+    fetch('http://localhost:5080/api/Speler')
         .then(response => response.json())
         .then(data => {
             let results = document.getElementById("results");
@@ -35,7 +35,7 @@ document.getElementById("add-speler").addEventListener("click", function()
         geboortejaar: document.getElementById("geboortejaar").value
     };
 
-    fetch('localhost:5080/api/Speler', {
+    fetch('http://localhost:5080/api/Speler', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -63,7 +63,7 @@ document.getElementById("delete-speler").addEventListener("click", function() {
         return;
     }
 
-    fetch(`localhost:5080/api/Spelers/${spelerId}`, {
+    fetch(`http://localhost:5080/api/Speler/${spelerId}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
@@ -97,24 +97,21 @@ document.getElementById("update-speler").addEventListener("click", function() {
         geboortejaar: document.getElementById("update-geboortejaar").value
     };
 
-    fetch(`localhost:5080/api/Spelers/${spelerId}`, {
+    fetch(`http://localhost:5080/api/Speler/${spelerId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(updatedSpeler)
     })
+        
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Fout bij het updaten van de speler');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log(`Speler met ID ${spelerId} geupdated:`, data);
-            alert(`Speler met ID ${spelerId} succesvol geupdated!`);
-        })
-        .catch(error => console.error('Error updating data:', error));
+    if (!response.ok) {
+        throw new Error('Fout bij het updaten van de speler');
+    }
+    console.log(`Speler met ID ${spelerId} geupdated`);
+    alert(`Speler met ID ${spelerId} succesvol geupdated!`);
+})
 });
 
 

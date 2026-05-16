@@ -1,7 +1,7 @@
 //De Get methode voor Rondes code wanneer pagina inleadt
 document.getElementById("load-rondes").addEventListener("click", function()
 {
-    fetch('localhost:5080/api/rondes')
+    fetch('http://localhost:5080/api/rondes')
         .then(response => response.json())
         .then(data => {
             let results = document.getElementById("results");
@@ -27,7 +27,7 @@ document.getElementById("add-ronde").addEventListener("click", function() {
         rondenummer: document.getElementById("ronde_nummer").value
     };
 
-    fetch('localhost:5080/api/Rondes', {
+    fetch('http://localhost:5080/api/Rondes', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -55,7 +55,7 @@ document.getElementById("delete-ronde").addEventListener("click", function() {
         return;
     }
 
-    fetch(`localhost:5080/api/Rondes/${rondeId}`, {
+    fetch(`http://localhost:5080/api/Rondes/${rondeId}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
@@ -85,7 +85,7 @@ document.getElementById("update-ronde").addEventListener("click", function() {
         rondenummer: document.getElementById("update-ronde_nummer").value
     };
 
-    fetch(`localhost:5080/api/Rondes/${rondeId}`, {
+    fetch(`http://localhost:5080/api/Rondes/${rondeId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'

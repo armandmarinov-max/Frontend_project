@@ -21,6 +21,7 @@
       <h2 id="Post-Spelers-title">Voeg een Speler toe</h2>
       <div class="Post-Spelers">
         <button id="add-speler">voeg toe</button>
+        <input id="speler_id" type="number" placeholder="Geef een Speler ID" />
         <input id="voornaam" type="text" placeholder="Geef een Voornaam" />
         <input id="achternaam" type="text" placeholder="Geef een Achternaam" />
         <input id="fide_id" type="number" placeholder="Geef een Fide ID" />
@@ -41,19 +42,19 @@
       </div>
       <div id="results" class="grid" aria-live="polite"></div>
     </section>
-    <script src="spelers.js"></script>
+   
    
     <section aria-labelledby="Put-Spelers-title">
       <h2 id="Put-Spelers-title">Update een Speler</h2>
       <div class="Put-Spelers">
         <button id="update-speler">update</button>
-        <input id="naam" type="text" placeholder="naam" />
-        <input id="voornaam" type="text" placeholder="Geef een Voornaam" />
-        <input id="achternaam" type="text" placeholder="Geef een Achternaam" />
-        <input id="fide_id" type="number" placeholder="Geef een Fide ID" />
-        <input id="land" type="text" placeholder="Geef een Land" />
-        <input id="geslacht" type="text" placeholder="Geef een Geslacht" />
-        <input id="geboortejaar" type="number" placeholder="Geef een Geboortejaar" />
+        <input id="update-speler_id" type="number" placeholder="Geef het ID van de speler" />
+        <input id="update-voornaam" type="text" placeholder="Geef een Voornaam" />
+        <input id="update-achternaam" type="text" placeholder="Geef een Achternaam" />
+        <input id="update-fide_id" type="number" placeholder="Geef een Fide ID" />
+        <input id="update-land" type="text" placeholder="Geef een Land" />
+        <input id="update-geslacht" type="text" placeholder="Geef een Geslacht" />
+        <input id="update-geboortejaar" type="number" placeholder="Geef een Geboortejaar" />
         <span id="status" role="status" aria-live="polite"></span>
       </div>
       <div id="results" class="grid" aria-live="polite"></div>
