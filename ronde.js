@@ -1,7 +1,6 @@
-//De Get methode voor Rondes code wanneer pagina inleadt
-document.getElementById("load-rondes").addEventListener("click", function()
-{
-    fetch('http://localhost:5080/api/rondes')
+// GET
+document.getElementById("load-rondes").addEventListener("click", function() {
+    fetch('http://localhost:5080/api/Ronde')  // ✅ Ronde niet Rondes
         .then(response => response.json())
         .then(data => {
             let results = document.getElementById("results");
@@ -10,97 +9,72 @@ document.getElementById("load-rondes").addEventListener("click", function()
                 let div = document.createElement("div");
                 div.className = "Get-Rondes";
                 div.innerHTML = `
-                    <h3>${item.ronde_id}</h3>
-                    <p>ToernooiID: ${item.toernooi_id}</p>
-                    <p>RondeNummer: ${item.ronde_nummer}</p>
+                    <h3>ID: ${item.rondeId}</h3>
+                    <p>ToernooiID: ${item.toernooiId}</p>
+                    <p>RondeNummer: ${item.rondeNummer}</p>
                 `;
                 results.appendChild(div);
             });
         })
         .catch(error => console.error('Error fetching data:', error));
 });
-// hier komt de post funtie voor rondes
+
+// POST
 document.getElementById("add-ronde").addEventListener("click", function() {
     const nieuweRonde = {
-        ronde_id: document.getElementById("ronde_id").value,
-        toernooi_id: document.getElementById("toernooi_id").value,
-        rondenummer: document.getElementById("ronde_nummer").value
+        toernooiId: parseInt(document.getElementById("toernooi_id").value),   // ✅ camelCase + parseInt
+        rondeNummer: parseInt(document.getElementById("ronde_nummer").value)
     };
 
-    fetch('http://localhost:5080/api/Rondes', {
+    fetch('http://localhost:5080/api/Ronde', {  // ✅ Ronde
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(nieuweRonde)
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Fout bij het toevoegen van de ronde');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Ronde toegevoegd:', data);
-            alert(`Ronde ${data.rondenummer} succesvol toegevoegd!`);
-        })
-        .catch(error => console.error('Error posting data:', error));
-});
-//hier komt de delete van een ronde
-document.getElementById("delete-ronde").addEventListener("click", function() {
-    const rondeId = document.getElementById("ronde_id").value;
-
-    if (!rondeId) {
-        alert("Geef een ronde ID op.");
-        return;
-    }
-
-    fetch(`http://localhost:5080/api/Rondes/${rondeId}`, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        }
+    .then(response => {
+        if (!response.ok) throw new Error('Fout bij toevoegen');
+        return response.json();
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Fout bij het verwijderen van de ronde');
-            }
-            console.log(`Ronde met ID ${rondeId} verwijderd`);
-            alert(`Ronde met ID ${rondeId} succesvol verwijderd!`);
-        })
-        .catch(error => console.error('Error deleting data:', error));
+    .then(data => alert(`Ronde ${data.rondeNummer} succesvol toegevoegd!`))
+    .catch(error => console.error('Error posting data:', error));
 });
-//hier komt de update van een ronde
-document.getElementById("update-ronde").addEventListener("click", function() {
-    const rondeId = document.getElementById("update-ronde_id").value;
 
-    if (!rondeId) {
-        alert("Geef een ronde ID op.");
-        return;
-    }
+// DELETE
+document.getElementById("delete-ronde").addEventListener("click", function() {
+    const rondeId = document.getElementById("delete-ronde_id").value;  // ✅ unieke ID
+    if (!rondeId) { alert("Geef een ronde ID op."); return; }
+
+    fetch(`http://localhost:5080/api/Ronde/${rondeId}`, {  // ✅ Ronde
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Fout bij verwijderen');
+        alert(`Ronde met ID ${rondeId} succesvol verwijderd!`);
+    })
+    .catch(error => console.error('Error deleting data:', error));
+});
+
+// PUT
+document.getElementById("update-ronde").addEventListener("click", function() {
+    const rondeId = document.getElementById("update-ronde_id").value;  // ✅ unieke ID
+    if (!rondeId) { alert("Geef een ronde ID op."); return; }
 
     const updatedRonde = {
-        ronde_id: rondeId,
-        toernooi_id: document.getElementById("update-toernooi_id").value,
-        rondenummer: document.getElementById("update-ronde_nummer").value
+        rondeId: parseInt(rondeId),
+        toernooiId: parseInt(document.getElementById("update-toernooi_id").value),
+        rondeNummer: parseInt(document.getElementById("update-ronde_nummer").value)
     };
 
-    fetch(`http://localhost:5080/api/Rondes/${rondeId}`, {
+    fetch(`http://localhost:5080/api/Ronde/${rondeId}`, {  // ✅ Ronde
         method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedRonde)
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Fout bij het updaten van de ronde');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log(`Ronde met ID ${rondeId} geupdated:`, data);
-            alert(`Ronde met ID ${rondeId} succesvol geupdated!`);
-        })
-        .catch(error => console.error('Error updating data:', error));
+    .then(response => {
+        if (!response.ok) throw new Error('Fout bij updaten');
+        // ✅ Geen .json() want NoContent()
+        alert(`Ronde met ID ${rondeId} succesvol geupdated!`);
+    })
+    .catch(error => console.error('Error updating data:', error));
 });

@@ -1,7 +1,6 @@
-// De Get methode voor klassement code wanneer pagina inleadt
-document.getElementById("load-klassement").addEventListener("click", function()
-{
-    fetch('http://localhost:5080/api/klassement')
+// GET
+document.getElementById("load-klassement").addEventListener("click", function() {
+    fetch('http://localhost:5080/api/Klassement')
         .then(response => response.json())
         .then(data => {
             let results = document.getElementById("results");
@@ -10,107 +9,81 @@ document.getElementById("load-klassement").addEventListener("click", function()
                 let div = document.createElement("div");
                 div.className = "Get-Klassement";
                 div.innerHTML = `
-                    <h3>${item.klassement_id}</h3>
-                    <p>ToernooiID: ${item.toernooi_id}</p>
-                    <p>SpelerID: ${item.speler_id}</p>
-                    <p>RondeNummer: ${item.ronde_nummer}</p>
+                    <h3>ID: ${item.klassementId}</h3>
+                    <p>ToernooiID: ${item.toernooiId}</p>
+                    <p>SpelerID: ${item.spelerId}</p>
+                    <p>RondeNummer: ${item.rondeNummer}</p>
                     <p>Score: ${item.score}</p>
-                    <p>gelijkspelScore: ${item.gelijkspelScore}</p>
+                    <p>GelijkspelScore: ${item.gelijkspelScore}</p>
                 `;
                 results.appendChild(div);
             });
         })
         .catch(error => console.error('Error fetching data:', error));
 });
-//hier komt de post funtie voor klassement
-document.getElementById("add-klassement").addEventListener("click", function()
-{
-    const nieuweKlassement = {
-        klasssement_id: document.getElementById("klassemnt_id").value,
-        toernooi_id: document.getElementById("toernooi_id").value,
-        speler_id: document.getElementById("speler_id").value,
-        rondenummer: document.getElementById("rondenummer").value,
-        score: document.getElementById("score").value,
-        gelijkspelscore: document.getElementById("gelijkspelscore").value
+
+// POST
+document.getElementById("add-klassement").addEventListener("click", function() {
+    const nieuwKlassement = {
+        toernooiId: parseInt(document.getElementById("toernooi_id").value),       // ✅ camelCase + parseInt
+        spelerId: parseInt(document.getElementById("speler_id").value),
+        rondeNummer: parseInt(document.getElementById("rondenummer").value),
+        score: parseFloat(document.getElementById("score").value),
+        gelijkspelScore: parseFloat(document.getElementById("gelijkspelscore").value)
     };
 
     fetch('http://localhost:5080/api/Klassement', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(nieuweKlassement)
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(nieuwKlassement)
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Fout bij het toevoegen van de klassement');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Klassement toegevoegd:', data);
-            alert(`Klassement ${data.klassement}  succesvol toegevoegd!`);
-        })
-        .catch(error => console.error('Error posting data:', error));
+    .then(response => {
+        if (!response.ok) throw new Error('Fout bij toevoegen');
+        return response.json();
+    })
+    .then(data => alert(`Klassement ID ${data.klassementId} succesvol toegevoegd!`))
+    .catch(error => console.error('Error posting data:', error));
 });
-//hier komt de delete van een klassement
-document.getElementById("delete-klassement").addEventListener("click", function() {
-    const klassementId = document.getElementById("klassemnt_id").value;
 
-    if (!klassementId) {
-        alert("Geef een klassement ID op.");
-        return;
-    }
+// DELETE
+document.getElementById("delete-klassement").addEventListener("click", function() {
+    const klassementId = document.getElementById("delete-klassement_id").value;  // ✅ unieke ID
+    if (!klassementId) { alert("Geef een klassement ID op."); return; }
 
     fetch(`http://localhost:5080/api/Klassement/${klassementId}`, {
         method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        headers: { 'Content-Type': 'application/json' }
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Fout bij het verwijderen van het klassement');
-            }
-            console.log(`Klassement met ID ${klassementId} verwijderd`);
-            alert(`Klassement met ID ${klassementId} succesvol verwijderd!`);
-        })
-        .catch(error => console.error('Error deleting data:', error));
+    .then(response => {
+        if (!response.ok) throw new Error('Fout bij verwijderen');
+        alert(`Klassement met ID ${klassementId} succesvol verwijderd!`);
+    })
+    .catch(error => console.error('Error deleting data:', error));
 });
-//hier komt de update van een klassement
-document.getElementById("update-klassement").addEventListener("click", function() {
-    const klassementId = document.getElementById("update-klassemnt_id").value;
 
-    if (!klassementId) {
-        alert("Geef een klassement ID op.");
-        return;
-    }
+// PUT
+document.getElementById("update-klassement").addEventListener("click", function() {
+    const klassementId = document.getElementById("update-klassement_id").value;  // ✅ unieke ID
+    if (!klassementId) { alert("Geef een klassement ID op."); return; }
 
     const updatedKlassement = {
-        klassement_id: klassementId,
-        toernooi_id: document.getElementById("update-toernooi_id").value,
-        speler_id: document.getElementById("update-speler_id").value,
-        rondenummer: document.getElementById("update-rondenummer").value,
-        score: document.getElementById("update-score").value,
-        gelijkspelscore: document.getElementById("update-gelijkspelscore").value
+        klassementId: parseInt(klassementId),
+        toernooiId: parseInt(document.getElementById("update-toernooi_id").value),
+        spelerId: parseInt(document.getElementById("update-speler_id").value),
+        rondeNummer: parseInt(document.getElementById("update-rondenummer").value),
+        score: parseFloat(document.getElementById("update-score").value),
+        gelijkspelScore: parseFloat(document.getElementById("update-gelijkspelscore").value)
     };
 
     fetch(`http://localhost:5080/api/Klassement/${klassementId}`, {
         method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedKlassement)
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Fout bij het updaten van het klassement');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log(`Klassement met ID ${klassementId} geupdated:`, data);
-            alert(`Klassement met ID ${klassementId} succesvol geupdated!`);
-        })
-        .catch(error => console.error('Error updating data:', error));
+    .then(response => {
+        if (!response.ok) throw new Error('Fout bij updaten');
+        // ✅ Geen .json() want NoContent()
+        alert(`Klassement met ID ${klassementId} succesvol geupdated!`);
+    })
+    .catch(error => console.error('Error updating data:', error));
 });
