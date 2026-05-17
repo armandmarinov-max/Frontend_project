@@ -106,7 +106,7 @@ fetch(`http://localhost:5080/api/Spel/${spelId}`, {
     if (!response.ok) {
         throw new Error('Fout bij het updaten van het spel');
     }
-    // ✅ Geen .json() want backend geeft NoContent() terug
+   
     alert(`Spel met ID ${spelId} succesvol geupdated!`);
 })
 .catch(error => console.error('Error updating data:', error));

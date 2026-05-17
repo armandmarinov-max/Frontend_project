@@ -1,6 +1,6 @@
 // GET
 document.getElementById("load-toernooien").addEventListener("click", function() {
-    fetch('http://localhost:5080/api/Schaak')  // ✅ Schaak niet Toernooien
+    fetch('http://localhost:5080/api/Schaak')  
         .then(response => response.json())
         .then(data => {
             window.alleToernooien = data;
@@ -28,12 +28,12 @@ document.getElementById("add-toernooi").addEventListener("click", function() {
     const nieuwToernooi = {
         naam: document.getElementById("naam").value,
         locatie: document.getElementById("locatie").value,
-        startDatum: document.getElementById("start_datum").value,  // ✅ camelCase
-        eindDatum: document.getElementById("eind_datum").value,    // ✅ camelCase
-        timeControle: document.getElementById("timecontrol").value // ✅ camelCase
+        startDatum: document.getElementById("start_datum").value, 
+        eindDatum: document.getElementById("eind_datum").value,    
+        timeControle: document.getElementById("timecontrol").value 
     };
 
-    fetch('http://localhost:5080/api/Schaak', {  // ✅ Schaak
+    fetch('http://localhost:5080/api/Schaak', { 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(nieuwToernooi)
@@ -48,10 +48,10 @@ document.getElementById("add-toernooi").addEventListener("click", function() {
 
 // DELETE
 document.getElementById("delete-toernooi").addEventListener("click", function() {
-    const toernooiId = document.getElementById("delete-toernooi_id").value;  // ✅ unieke ID
+    const toernooiId = document.getElementById("delete-toernooi_id").value;  
     if (!toernooiId) { alert("Geef een toernooi ID op."); return; }
 
-    fetch(`http://localhost:5080/api/Schaak/${toernooiId}`, {  // ✅ Schaak
+    fetch(`http://localhost:5080/api/Schaak/${toernooiId}`, { 
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -76,14 +76,14 @@ document.getElementById("update-toernooi").addEventListener("click", function() 
         timeControle: document.getElementById("update-timecontrol").value
     };
 
-    fetch(`http://localhost:5080/api/Schaak/${toernooiId}`, {  // ✅ Schaak
+    fetch(`http://localhost:5080/api/Schaak/${toernooiId}`, {  
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedToernooi)
     })
     .then(response => {
         if (!response.ok) throw new Error('Fout bij updaten');
-        // ✅ Geen .json() want NoContent()
+     
         alert(`Toernooi met ID ${toernooiId} succesvol geupdated!`);
     })
     .catch(error => console.error('Error updating data:', error));

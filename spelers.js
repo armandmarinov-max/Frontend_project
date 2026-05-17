@@ -30,7 +30,7 @@ document.getElementById("add-speler").addEventListener("click", function()
     const nieuweSpeler = {
     voornaam: document.getElementById("voornaam").value,
     achternaam: document.getElementById("achternaam").value,
-    fideId: parseInt(document.getElementById("fide_id").value) || null,  // ✅ camelCase + parseInt
+    fideId: parseInt(document.getElementById("fide_id").value) || null, 
     land: document.getElementById("land").value,
     geslacht: document.getElementById("geslacht").value,
     geboortejaar: parseInt(document.getElementById("geboortejaar").value)
@@ -92,7 +92,7 @@ document.getElementById("update-speler").addEventListener("click", function() {
     spelerId: parseInt(spelerId),
     voornaam: document.getElementById("update-voornaam").value,
     achternaam: document.getElementById("update-achternaam").value,
-    fideId: parseInt(document.getElementById("update-fide_id").value) || null,  // ✅
+    fideId: parseInt(document.getElementById("update-fide_id").value) || null,  
     land: document.getElementById("update-land").value,
     geslacht: document.getElementById("update-geslacht").value,
     geboortejaar: parseInt(document.getElementById("update-geboortejaar").value)

@@ -3,7 +3,6 @@
 const API_URL = "http://localhost:5080/api/Admin/login";
 // ────────────────────────────────────────────────────────
 
-// Allow Enter key to submit
 document.addEventListener("keydown", (e) => {
   if (e.key === "Enter") handleLogin();
 });
@@ -14,13 +13,13 @@ async function handleLogin() {
   const errorMsg  = document.getElementById("errorMsg");
   const loginBtn  = document.getElementById("loginBtn");
 
-  // Basic client-side check
+
   if (!username || !password) {
     showError("Please fill in both fields.");
     return;
   }
 
-  // Show loading state
+
   loginBtn.textContent = "Verifying…";
   loginBtn.disabled = true;
   errorMsg.classList.remove("visible");
@@ -35,10 +34,10 @@ async function handleLogin() {
     if (response.ok) {
       const data = await response.json();
 
-      // Save the token so protected pages can check it
+
       sessionStorage.setItem("adminToken", data.token);
 
-      // Redirect to admin hub
+
       window.location.href = "admin-hub.html";
 
     } else if (response.status === 401) {
@@ -48,7 +47,7 @@ async function handleLogin() {
     }
 
   } catch (err) {
-    // Network error or API unreachable
+
     showError("Could not reach the server. Check your connection.");
     console.error(err);
   } finally {

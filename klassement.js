@@ -26,7 +26,7 @@ document.getElementById("load-klassement").addEventListener("click", function() 
 // POST
 document.getElementById("add-klassement").addEventListener("click", function() {
     const nieuwKlassement = {
-        toernooiId: parseInt(document.getElementById("toernooi_id").value),       // ✅ camelCase + parseInt
+        toernooiId: parseInt(document.getElementById("toernooi_id").value),      
         spelerId: parseInt(document.getElementById("speler_id").value),
         rondeNummer: parseInt(document.getElementById("rondenummer").value),
         score: parseFloat(document.getElementById("score").value),
@@ -48,7 +48,7 @@ document.getElementById("add-klassement").addEventListener("click", function() {
 
 // DELETE
 document.getElementById("delete-klassement").addEventListener("click", function() {
-    const klassementId = document.getElementById("delete-klassement_id").value;  // ✅ unieke ID
+    const klassementId = document.getElementById("delete-klassement_id").value;  
     if (!klassementId) { alert("Geef een klassement ID op."); return; }
 
     fetch(`http://localhost:5080/api/Klassement/${klassementId}`, {
@@ -64,7 +64,7 @@ document.getElementById("delete-klassement").addEventListener("click", function(
 
 // PUT
 document.getElementById("update-klassement").addEventListener("click", function() {
-    const klassementId = document.getElementById("update-klassement_id").value;  // ✅ unieke ID
+    const klassementId = document.getElementById("update-klassement_id").value; 
     if (!klassementId) { alert("Geef een klassement ID op."); return; }
 
     const updatedKlassement = {
@@ -83,7 +83,7 @@ document.getElementById("update-klassement").addEventListener("click", function(
     })
     .then(response => {
         if (!response.ok) throw new Error('Fout bij updaten');
-        // ✅ Geen .json() want NoContent()
+
         alert(`Klassement met ID ${klassementId} succesvol geupdated!`);
     })
     .catch(error => console.error('Error updating data:', error));

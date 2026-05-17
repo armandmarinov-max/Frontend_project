@@ -1,6 +1,6 @@
 // GET
 document.getElementById("load-rondes").addEventListener("click", function() {
-    fetch('http://localhost:5080/api/Ronde')  // ✅ Ronde niet Rondes
+    fetch('http://localhost:5080/api/Ronde')  
         .then(response => response.json())
         .then(data => {
             window.alleRondes = data;
@@ -23,11 +23,11 @@ document.getElementById("load-rondes").addEventListener("click", function() {
 // POST
 document.getElementById("add-ronde").addEventListener("click", function() {
     const nieuweRonde = {
-        toernooiId: parseInt(document.getElementById("toernooi_id").value),   // ✅ camelCase + parseInt
+        toernooiId: parseInt(document.getElementById("toernooi_id").value),   
         rondeNummer: parseInt(document.getElementById("ronde_nummer").value)
     };
 
-    fetch('http://localhost:5080/api/Ronde', {  // ✅ Ronde
+    fetch('http://localhost:5080/api/Ronde', {  
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(nieuweRonde)
@@ -42,10 +42,10 @@ document.getElementById("add-ronde").addEventListener("click", function() {
 
 // DELETE
 document.getElementById("delete-ronde").addEventListener("click", function() {
-    const rondeId = document.getElementById("delete-ronde_id").value;  // ✅ unieke ID
+    const rondeId = document.getElementById("delete-ronde_id").value;  
     if (!rondeId) { alert("Geef een ronde ID op."); return; }
 
-    fetch(`http://localhost:5080/api/Ronde/${rondeId}`, {  // ✅ Ronde
+    fetch(`http://localhost:5080/api/Ronde/${rondeId}`, { 
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -58,7 +58,7 @@ document.getElementById("delete-ronde").addEventListener("click", function() {
 
 // PUT
 document.getElementById("update-ronde").addEventListener("click", function() {
-    const rondeId = document.getElementById("update-ronde_id").value;  // ✅ unieke ID
+    const rondeId = document.getElementById("update-ronde_id").value; 
     if (!rondeId) { alert("Geef een ronde ID op."); return; }
 
     const updatedRonde = {
@@ -67,14 +67,14 @@ document.getElementById("update-ronde").addEventListener("click", function() {
         rondeNummer: parseInt(document.getElementById("update-ronde_nummer").value)
     };
 
-    fetch(`http://localhost:5080/api/Ronde/${rondeId}`, {  // ✅ Ronde
+    fetch(`http://localhost:5080/api/Ronde/${rondeId}`, {  
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedRonde)
     })
     .then(response => {
         if (!response.ok) throw new Error('Fout bij updaten');
-        // ✅ Geen .json() want NoContent()
+
         alert(`Ronde met ID ${rondeId} succesvol geupdated!`);
     })
     .catch(error => console.error('Error updating data:', error));
