@@ -20,414 +20,170 @@
       --muted:    #7a7160;
       --border:   rgba(201,168,76,0.15);
       --border2:  rgba(201,168,76,0.30);
-      --white-sq: #c8b48a;
-      --black-sq: #1e1a12;
+      --nav-bg:   rgba(12,11,9,0.95);
+    }
+    body.day {
+      --bg:       #f5f0e8; --bg2: #ede5d0; --bg3: #e0d5be; --bg4: #d4c8b0;
+      --gold:     #7a5518; --gold2: #9a7028; --gold-dim: #b8962a;
+      --cream:    #1c1a14; --muted: #6b5e44;
+      --border:   rgba(100,70,20,0.18); --border2: rgba(100,70,20,0.35);
+      --nav-bg:   rgba(245,240,232,0.97);
     }
 
     html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--cream); font-family: 'Lora', serif; min-height: 100vh; overflow-x: hidden; transition: background 0.35s ease, color 0.35s ease; }
 
-    body {
-      background: var(--bg);
-      color: var(--cream);
-      font-family: 'Lora', serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    .board-bg {
-      position: fixed; inset: 0; z-index: 0; pointer-events: none;
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: repeat(12, 1fr);
-      opacity: 0.03;
-    }
+    .board-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; display: grid; grid-template-columns: repeat(12,1fr); grid-template-rows: repeat(12,1fr); opacity: 0.03; }
     .board-bg span { display: block; }
 
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(12,11,9,0.92);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2rem;
-      height: 56px;
-    }
-    .nav-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      color: var(--gold);
-      display: flex; align-items: center; gap: 0.5rem;
-      text-decoration: none;
-    }
-    .nav-links { display: flex; gap: 1.5rem; align-items: center; }
-    .nav-links a {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
+    nav { position: sticky; top: 0; z-index: 100; background: var(--nav-bg); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 56px; transition: background 0.35s ease, border-color 0.35s ease; }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+    .nav-links { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .nav-links a { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .nav-links a:hover { color: var(--gold); }
-    .nav-admin {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--gold);
-      border: 1px solid var(--border2);
-      padding: 6px 14px;
-      border-radius: 2px;
-      text-decoration: none;
-      transition: background 0.2s, color 0.2s;
-    }
-    .nav-admin:hover { background: var(--gold); color: var(--bg); }
+    .nav-admin { color: var(--gold) !important; border: 1px solid var(--border2); padding: 5px 12px; border-radius: 2px; transition: background 0.2s, color 0.2s !important; }
+    .nav-admin:hover { background: var(--gold); color: var(--bg) !important; }
+    .theme-toggle { background: none; border: 1px solid var(--border2); border-radius: 2px; padding: 5px 12px; cursor: pointer; font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.08em; color: var(--muted); transition: all 0.2s; display: flex; align-items: center; gap: 0.4rem; }
+    .theme-toggle:hover { border-color: var(--gold); color: var(--gold); }
+    .theme-toggle .icon { font-size: 0.85rem; }
 
     .page { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 1.5rem 4rem; }
 
-    .hero {
-      padding: 5rem 0 3.5rem;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 2rem;
-      align-items: end;
-      border-bottom: 1px solid var(--border);
-      animation: fadeUp 0.7s ease both;
-    }
-    .hero-eyebrow {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 1rem;
-    }
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.4rem, 6vw, 4rem);
-      font-weight: 700;
-      line-height: 1.05;
-      color: var(--cream);
-    }
+    .hero { padding: 5rem 0 3.5rem; display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: end; border-bottom: 1px solid var(--border); animation: fadeUp 0.7s ease both; }
+    .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 700; line-height: 1.05; color: var(--cream); }
     .hero h1 em { font-style: italic; color: var(--gold); }
-    .hero-sub {
-      margin-top: 1rem;
-      font-size: 0.95rem;
-      color: var(--muted);
-      max-width: 420px;
-      line-height: 1.7;
-    }
-    .hero-piece {
-      font-size: 6rem;
-      line-height: 1;
-      opacity: 0.18;
-      user-select: none;
-      animation: floatPiece 6s ease-in-out infinite;
-    }
-    @keyframes floatPiece {
-      0%,100% { transform: translateY(0) rotate(-3deg); }
-      50%      { transform: translateY(-12px) rotate(3deg); }
-    }
+    .hero-sub { margin-top: 1rem; font-size: 0.95rem; color: var(--muted); max-width: 420px; line-height: 1.7; }
+    .hero-piece { font-size: 6rem; line-height: 1; opacity: 0.18; user-select: none; animation: floatPiece 6s ease-in-out infinite; }
+    @keyframes floatPiece { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-12px) rotate(3deg); } }
 
-    .sec-head {
-      display: flex; align-items: center; gap: 1rem;
-      margin: 3rem 0 1.25rem;
-    }
-    .sec-head h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--cream);
-      white-space: nowrap;
-    }
+    .sec-head { display: flex; align-items: center; gap: 1rem; margin: 3rem 0 1.25rem; }
+    .sec-head h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--cream); white-space: nowrap; }
     .sec-head .piece-sm { font-size: 1.2rem; opacity: 0.6; }
     .sec-line { flex: 1; height: 1px; background: var(--border); }
-    .sec-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-      white-space: nowrap;
-    }
+    .sec-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
 
-    .card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      padding: 1.25rem 1.5rem;
-      transition: border-color 0.2s;
-    }
+    .card { background: var(--bg2); border: 1px solid var(--border); border-radius: 3px; padding: 1.25rem 1.5rem; transition: border-color 0.2s, background 0.35s ease; }
     .card:hover { border-color: var(--border2); }
 
+    /* ── STATS BAR (5 blokjes) ── */
+    .stats-bar { display: grid; grid-template-columns: repeat(5,1fr); gap: 1rem; margin: 2rem 0 0; animation: fadeUp 0.6s ease 0.08s both; }
+    @media (max-width: 750px) { .stats-bar { grid-template-columns: repeat(3,1fr); } }
+    @media (max-width: 420px) { .stats-bar { grid-template-columns: repeat(2,1fr); } }
+    .stat-block { background: var(--bg2); border: 1px solid var(--border); border-radius: 3px; padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: 0.25rem; position: relative; overflow: hidden; transition: border-color 0.2s, background 0.35s ease; }
+    .stat-block::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--gold); opacity: 0.4; transition: opacity 0.2s; }
+    .stat-block:hover { border-color: var(--border2); }
+    .stat-block:hover::after { opacity: 0.85; }
+    .stat-piece { font-size: 1.1rem; opacity: 0.5; line-height: 1; margin-bottom: 0.1rem; }
+    .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--gold); line-height: 1; }
+    .stat-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+
+    /* ── TOURNAMENTS ── */
     .tournaments { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 1rem; }
-    .t-card {
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      padding: 1.25rem;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.2s, transform 0.2s;
-    }
+    .t-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 3px; padding: 1.25rem; position: relative; overflow: hidden; transition: border-color 0.2s, transform 0.2s, background 0.35s ease; }
     .t-card:hover { border-color: var(--gold-dim); transform: translateY(-2px); }
-    .t-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: var(--gold);
-      opacity: 0.5;
-    }
-    .t-status {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 3px 8px;
-      border-radius: 2px;
-      display: inline-block;
-      margin-bottom: 0.75rem;
-    }
+    .t-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gold); opacity: 0.5; }
+    .t-status { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 8px; border-radius: 2px; display: inline-block; margin-bottom: 0.75rem; }
     .t-status.active   { background: rgba(201,168,76,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
     .t-status.upcoming { background: rgba(122,113,96,0.15); color: var(--muted); border: 1px solid rgba(122,113,96,0.3); }
-    .t-status.finished { background: rgba(28,26,22,0.8);    color: var(--muted); border: 1px solid var(--border); }
-    .t-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--cream);
-      margin-bottom: 0.35rem;
-    }
-    .t-meta {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--muted);
-      letter-spacing: 0.06em;
-      line-height: 1.8;
-    }
-    .t-players { margin-top: 0.75rem; display: flex; gap: 4px; }
-    .t-players span {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--gold);
-      opacity: 0.4;
-    }
-    .t-players span.filled { opacity: 1; }
+    .t-status.finished { background: rgba(28,26,22,0.08); color: var(--muted); border: 1px solid var(--border); }
+    .t-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--cream); margin-bottom: 0.35rem; }
+    .t-meta { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.06em; line-height: 1.8; }
 
-    /* ── LEADERBOARD ── */
+    /* ── RECENT SPELERS ── */
+    .recent-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+    @media (max-width: 640px) { .recent-grid { grid-template-columns: 1fr; } }
+    .recent-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 3px; padding: 1.1rem 1.25rem; display: flex; align-items: center; gap: 0.85rem; transition: border-color 0.2s, transform 0.2s, background 0.35s ease; }
+    .recent-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+    .recent-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--bg4); border: 1px solid var(--border2); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-family: 'DM Mono', monospace; color: var(--gold); flex-shrink: 0; }
+    .recent-info { min-width: 0; }
+    .recent-name { font-family: 'Lora', serif; font-size: 0.9rem; color: var(--cream); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .recent-meta { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--muted); letter-spacing: 0.06em; margin-top: 2px; }
+    .recent-badge { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold-dim); padding: 2px 6px; border-radius: 2px; background: rgba(201,168,76,0.07); margin-top: 4px; display: inline-block; }
+
+    /* ── CONTROLS ── */
+    .lb-controls { display: flex; gap: 0.75rem; margin-bottom: 0.75rem; flex-wrap: wrap; align-items: center; }
+    .lb-search-wrap { position: relative; flex: 1; min-width: 180px; }
+    .lb-search-wrap .search-icon { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); font-size: 0.75rem; color: var(--muted); pointer-events: none; }
+    .lb-search { width: 100%; background: var(--bg2); border: 1px solid var(--border); border-radius: 2px; padding: 0.55rem 0.75rem 0.55rem 2.2rem; font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.05em; color: var(--cream); outline: none; transition: border-color 0.2s, background 0.35s ease; }
+    .lb-search::placeholder { color: var(--muted); }
+    .lb-search:focus { border-color: var(--gold-dim); background: var(--bg3); }
+    .lb-filter { background: var(--bg2); border: 1px solid var(--border); border-radius: 2px; padding: 0.55rem 0.75rem; font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.06em; color: var(--muted); outline: none; cursor: pointer; transition: border-color 0.2s, color 0.2s, background 0.35s ease; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237a7160'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.6rem center; padding-right: 1.75rem; }
+    .lb-filter:focus, .lb-filter:hover { border-color: var(--gold-dim); color: var(--cream); }
+    .lb-filter option { background: var(--bg2); color: var(--cream); }
+
+    /* ── PLAYER LEADERBOARD ── */
     .leaderboard { overflow: hidden; }
-    .lb-row {
-      display: grid;
-      grid-template-columns: 2rem 1fr 6rem 6rem 5rem;
-      gap: 0.5rem;
-      align-items: center;
-      padding: 0.75rem 1.25rem;
-      border-bottom: 1px solid var(--border);
-      transition: background 0.15s;
-    }
+    .lb-row { display: grid; grid-template-columns: 2rem 1fr 6rem 6rem 5rem; gap: 0.5rem; align-items: center; padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--border); transition: background 0.15s; }
     .lb-row:last-child { border-bottom: none; }
     .lb-row:hover { background: var(--bg3); }
-    .lb-row.header {
-      background: var(--bg3);
-      border-bottom: 1px solid var(--border2);
-    }
-    .lb-row.header span {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .lb-rank {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--muted);
-      text-align: center;
-    }
+    .lb-row.header { background: var(--bg3); border-bottom: 1px solid var(--border2); }
+    .lb-row.header span { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+    .lb-rank { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--muted); text-align: center; }
     .lb-rank.gold   { color: var(--gold); font-weight: 500; }
     .lb-rank.silver { color: #a0a0a0; }
     .lb-rank.bronze { color: #cd7f32; }
-    .lb-name {
-      font-family: 'Lora', serif;
-      font-size: 0.9rem;
-      color: var(--cream);
-      display: flex; align-items: center; gap: 0.5rem;
-    }
-    .lb-avatar {
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      background: var(--bg4);
-      border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.7rem;
-      color: var(--gold);
-      font-family: 'DM Mono', monospace;
-      flex-shrink: 0;
-    }
-    .lb-val {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--cream);
-      text-align: center;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .lb-elo {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.78rem;
-      color: var(--gold);
-      text-align: center;
-      font-weight: 500;
-    }
+    .lb-name { font-family: 'Lora', serif; font-size: 0.9rem; color: var(--cream); display: flex; align-items: center; gap: 0.5rem; }
+    .lb-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--bg4); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--gold); font-family: 'DM Mono', monospace; flex-shrink: 0; }
+    .lb-val { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--cream); text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .lb-elo { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--gold); text-align: center; font-weight: 500; }
 
-    /* Loading & error states */
-    .lb-loading {
-      padding: 2rem;
-      text-align: center;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-    }
-    .lb-loading span {
-      display: inline-block;
-      animation: pulse 1.2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 0.4; }
-      50%       { opacity: 1; }
-    }
+    /* ── GENERIC DATA TABLE ── */
+    .data-table { overflow: hidden; }
+    .dt-row { display: grid; align-items: center; padding: 0.7rem 1.25rem; border-bottom: 1px solid var(--border); transition: background 0.15s; gap: 0.5rem; }
+    .dt-row:last-child { border-bottom: none; }
+    .dt-row:hover { background: var(--bg3); }
+    .dt-row.header { background: var(--bg3); border-bottom: 1px solid var(--border2); }
+    .dt-row.header span { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+    .dt-cell { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--cream); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .dt-cell.accent { color: var(--gold); font-weight: 500; }
+    .dt-cell.muted  { color: var(--muted); }
+    .dt-badge { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 7px; border-radius: 2px; display: inline-block; }
+    .dt-badge.win  { background: rgba(201,168,76,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+    .dt-badge.draw { background: rgba(122,113,96,0.15); color: var(--muted); border: 1px solid rgba(122,113,96,0.3); }
+    .dt-badge.loss { background: rgba(28,26,22,0.1); color: var(--muted); border: 1px solid var(--border); }
 
+    /* column layouts */
+    .matches-row { grid-template-columns: 3rem 5rem 1fr 2rem 1fr 6rem 5rem; }
+    .rondes-row  { grid-template-columns: 3rem 6rem 6rem; }
+    .klass-row   { grid-template-columns: 3rem 5rem 5rem 5rem 5rem 6rem; }
+
+    /* ── LOADING ── */
+    .lb-loading { padding: 2rem; text-align: center; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; }
+    .lb-loading span { display: inline-block; animation: pulse 1.2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+    /* ── BOTTOM GRID ── */
     .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
     @media (max-width: 640px) { .bottom-grid { grid-template-columns: 1fr; } }
 
     .spotlight { display: flex; flex-direction: column; gap: 1rem; }
     .spotlight-header { display: flex; gap: 1rem; align-items: center; }
-    .spotlight-avatar {
-      width: 56px; height: 56px;
-      border-radius: 50%;
-      background: var(--bg4);
-      border: 2px solid var(--gold-dim);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem;
-      flex-shrink: 0;
-    }
-    .spotlight-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--cream);
-    }
-    .spotlight-title {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-top: 2px;
-    }
+    .spotlight-avatar { width: 56px; height: 56px; border-radius: 50%; background: var(--bg4); border: 2px solid var(--gold-dim); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-family: 'DM Mono', monospace; color: var(--gold); flex-shrink: 0; }
+    .spotlight-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--cream); }
+    .spotlight-title { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-top: 2px; }
     .spotlight-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; }
-    .sp-stat {
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      padding: 0.6rem 0.5rem;
-      text-align: center;
-    }
-    .sp-stat-val {
-      font-family: 'DM Mono', monospace;
-      font-size: 1rem;
-      font-weight: 500;
-      color: var(--gold);
-    }
-    .sp-stat-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-top: 3px;
-    }
-    .sp-quote {
-      font-style: italic;
-      font-size: 0.85rem;
-      color: var(--muted);
-      border-left: 2px solid var(--gold-dim);
-      padding-left: 0.75rem;
-      line-height: 1.6;
-    }
+    .sp-stat { background: var(--bg3); border: 1px solid var(--border); border-radius: 3px; padding: 0.6rem 0.5rem; text-align: center; transition: background 0.35s ease; }
+    .sp-stat-val { font-family: 'DM Mono', monospace; font-size: 1rem; font-weight: 500; color: var(--gold); }
+    .sp-stat-label { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
+    .sp-quote { font-style: italic; font-size: 0.85rem; color: var(--muted); border-left: 2px solid var(--gold-dim); padding-left: 0.75rem; line-height: 1.6; }
 
     .match-list { display: flex; flex-direction: column; gap: 0.6rem; }
-    .match-row {
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      padding: 0.75rem 1rem;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr auto;
-      align-items: center;
-      gap: 0.5rem;
-      transition: border-color 0.2s;
-    }
+    .match-row { background: var(--bg3); border: 1px solid var(--border); border-radius: 3px; padding: 0.75rem 1rem; display: grid; grid-template-columns: 1fr auto 1fr auto; align-items: center; gap: 0.5rem; transition: border-color 0.2s, background 0.35s ease; }
     .match-row:hover { border-color: var(--border2); }
     .match-player { font-family: 'Lora', serif; font-size: 0.85rem; color: var(--cream); }
     .match-player.right { text-align: right; }
-    .match-vs {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.6rem;
-      color: var(--muted);
-      text-align: center;
-      letter-spacing: 0.1em;
-    }
-    .match-date {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.6rem;
-      color: var(--gold);
-      letter-spacing: 0.06em;
-      white-space: nowrap;
-    }
+    .match-vs { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); text-align: center; letter-spacing: 0.1em; }
+    .match-date { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--gold); letter-spacing: 0.06em; white-space: nowrap; }
 
-    footer {
-      position: relative; z-index: 1;
-      border-top: 1px solid var(--border);
-      padding: 1.5rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1080px;
-      margin: 0 auto;
-    }
-    footer span {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    footer a {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--gold);
-      text-decoration: none;
-    }
+    footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; max-width: 1080px; margin: 0 auto; }
+    footer span { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    footer a { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); text-decoration: none; }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     .anim { animation: fadeUp 0.6s ease both; }
-    .anim-1 { animation-delay: 0.1s; }
-    .anim-2 { animation-delay: 0.2s; }
-    .anim-3 { animation-delay: 0.3s; }
-    .anim-4 { animation-delay: 0.4s; }
-
-    /* Row fade-in when loaded */
-    .lb-row.data-row {
-      animation: fadeUp 0.4s ease both;
-    }
+    .anim-1 { animation-delay: 0.1s; } .anim-2 { animation-delay: 0.2s; } .anim-3 { animation-delay: 0.3s; } .anim-4 { animation-delay: 0.35s; } .anim-5 { animation-delay: 0.4s; }
+    .lb-row.data-row, .dt-row.data-row { animation: fadeUp 0.4s ease both; }
   </style>
 </head>
 <body>
@@ -439,8 +195,15 @@
     <div class="nav-links">
       <a href="#tournaments">Tournaments</a>
       <a href="#rankings">Rankings</a>
+      <a href="#matches">Matches</a>
+      <a href="#rondes">Rondes</a>
+      <a href="#klassement">Klassement</a>
       <a href="#upcoming">Schedule</a>
       <a href="admin-login.html" class="nav-admin">Admin ↗</a>
+      <button class="theme-toggle" id="theme-toggle">
+        <span class="icon" id="theme-icon">☀️</span>
+        <span id="theme-label">Dag</span>
+      </button>
     </div>
   </nav>
 
@@ -455,46 +218,54 @@
       <div class="hero-piece" aria-hidden="true">♛</div>
     </section>
 
+    <!-- ── 5 STAT BLOKJES ── -->
+    <div class="stats-bar">
+      <div class="stat-block"><span class="stat-piece">♟</span><span class="stat-num" id="stat-spelers">—</span><span class="stat-label">Spelers</span></div>
+      <div class="stat-block"><span class="stat-piece">♜</span><span class="stat-num" id="stat-toernooien">—</span><span class="stat-label">Toernooien</span></div>
+      <div class="stat-block"><span class="stat-piece">♛</span><span class="stat-num" id="stat-rondes">—</span><span class="stat-label">Rondes</span></div>
+      <div class="stat-block"><span class="stat-piece">♞</span><span class="stat-num" id="stat-matches">—</span><span class="stat-label">Matches</span></div>
+      <div class="stat-block"><span class="stat-piece">♝</span><span class="stat-num" id="stat-klassement">—</span><span class="stat-label">Klassement</span></div>
+    </div>
+
+    <!-- ── TOURNAMENTS (live DB) ── -->
     <section id="tournaments" class="anim anim-1">
       <div class="sec-head">
         <span class="piece-sm">♜</span>
         <h2>Tournaments</h2>
         <div class="sec-line"></div>
-        <span class="sec-label">Overview</span>
+        <span class="sec-label">Live data</span>
       </div>
-      <div class="tournaments">
-        <div class="t-card">
-          <span class="t-status active">● Active</span>
-          <div class="t-name">Spring Open 2025</div>
-          <div class="t-meta">Format: Swiss<br>Round 4 of 7<br>Players: 12</div>
-          <div class="t-players">
-            <span class="filled"></span><span class="filled"></span><span class="filled"></span>
-            <span class="filled"></span><span class="filled"></span><span></span><span></span><span></span>
-          </div>
+      <div class="lb-controls">
+        <div class="lb-search-wrap">
+          <span class="search-icon">⌕</span>
+          <input class="lb-search" id="toernooi-search" type="text" placeholder="Zoek toernooi…" autocomplete="off">
         </div>
-        <div class="t-card">
-          <span class="t-status upcoming">○ Upcoming</span>
-          <div class="t-name">Summer Blitz Series</div>
-          <div class="t-meta">Format: Blitz<br>Starts: 15 Jun 2025<br>Players: 0 / 16</div>
-          <div class="t-players">
-            <span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span>
-          </div>
-        </div>
-        <div class="t-card">
-          <span class="t-status finished">✓ Finished</span>
-          <div class="t-name">Winter Classic 2024</div>
-          <div class="t-meta">Format: Round Robin<br>Winner: J. Vermeulen<br>Players: 8</div>
-          <div class="t-players">
-            <span class="filled"></span><span class="filled"></span><span class="filled"></span>
-            <span class="filled"></span><span class="filled"></span><span class="filled"></span>
-            <span class="filled"></span><span class="filled"></span>
-          </div>
-        </div>
+        <select class="lb-filter" id="toernooi-filter-status">
+          <option value="">Alle statussen</option>
+          <option value="active">Actief</option>
+          <option value="upcoming">Upcoming</option>
+          <option value="finished">Afgelopen</option>
+        </select>
+      </div>
+      <div class="tournaments" id="tournaments-grid">
+        <div class="lb-loading" style="grid-column:1/-1;"><span>Toernooien laden…</span></div>
       </div>
     </section>
 
-    <!-- Leaderboard - gevuld met echte data -->
+    <!-- ── RECENT SPELERS ── -->
+    <section id="recent-players" class="anim anim-2">
+      <div class="sec-head">
+        <span class="piece-sm">♟</span>
+        <h2>Recent toegevoegd</h2>
+        <div class="sec-line"></div>
+        <span class="sec-label">laatste 3 spelers</span>
+      </div>
+      <div class="recent-grid" id="recent-grid">
+        <div class="lb-loading" style="grid-column:1/-1;"><span>Laden…</span></div>
+      </div>
+    </section>
+
+    <!-- ── PLAYER RANKINGS ── -->
     <section id="rankings" class="anim anim-2">
       <div class="sec-head">
         <span class="piece-sm">♞</span>
@@ -502,190 +273,503 @@
         <div class="sec-line"></div>
         <span class="sec-label">by FIDE ID</span>
       </div>
+      <div class="lb-controls">
+        <div class="lb-search-wrap">
+          <span class="search-icon">⌕</span>
+          <input class="lb-search" id="lb-search" type="text" placeholder="Zoek op naam of land…" autocomplete="off">
+        </div>
+        <select class="lb-filter" id="filter-land"><option value="">Alle landen</option></select>
+        <select class="lb-filter" id="filter-geslacht">
+          <option value="">Alle geslachten</option>
+          <option value="M">Man</option>
+          <option value="V">Vrouw</option>
+        </select>
+      </div>
       <div class="card leaderboard" style="padding:0;">
         <div class="lb-row header">
-          <span>#</span>
-          <span>Player</span>
+          <span>#</span><span>Speler</span>
           <span style="text-align:center;">Land</span>
           <span style="text-align:center;">Geslacht</span>
           <span style="text-align:center;">FIDE</span>
         </div>
-        <!-- Rijen worden hier dynamisch ingeladen -->
-        <div id="leaderboard-body">
-          <div class="lb-loading"><span>Loading players…</span></div>
-        </div>
+        <div id="leaderboard-body"><div class="lb-loading"><span>Spelers laden…</span></div></div>
       </div>
     </section>
 
+    <!-- ── MATCHES (Spel tabel) ── -->
+    <section id="matches" class="anim anim-3">
+      <div class="sec-head">
+        <span class="piece-sm">♞</span>
+        <h2>Matches</h2>
+        <div class="sec-line"></div>
+        <span class="sec-label">alle spellen</span>
+      </div>
+      <div class="lb-controls">
+        <div class="lb-search-wrap">
+          <span class="search-icon">⌕</span>
+          <input class="lb-search" id="match-search" type="text" placeholder="Zoek op speler ID, bord…" autocomplete="off">
+        </div>
+        <select class="lb-filter" id="match-filter-toernooi"><option value="">Alle toernooien</option></select>
+        <select class="lb-filter" id="match-filter-resultaat">
+          <option value="">Alle resultaten</option>
+          <option value="1-0">1-0 (Wit wint)</option>
+          <option value="0-1">0-1 (Zwart wint)</option>
+          <option value="½-½">½-½ (Remise)</option>
+        </select>
+      </div>
+      <div class="card data-table" style="padding:0;">
+        <div class="dt-row matches-row header">
+          <span>ID</span><span>Toernooi</span><span>Wit</span>
+          <span style="text-align:center;">vs</span><span>Zwart</span>
+          <span style="text-align:center;">Resultaat</span><span style="text-align:center;">Bord</span>
+        </div>
+        <div id="matches-body"><div class="lb-loading"><span>Matches laden…</span></div></div>
+      </div>
+    </section>
+
+    <!-- ── RONDES ── -->
+    <section id="rondes" class="anim anim-4">
+      <div class="sec-head">
+        <span class="piece-sm">♝</span>
+        <h2>Rondes</h2>
+        <div class="sec-line"></div>
+        <span class="sec-label">alle rondes</span>
+      </div>
+      <div class="lb-controls">
+        <div class="lb-search-wrap">
+          <span class="search-icon">⌕</span>
+          <input class="lb-search" id="ronde-search" type="text" placeholder="Zoek op ronde ID of nummer…" autocomplete="off">
+        </div>
+        <select class="lb-filter" id="ronde-filter-toernooi"><option value="">Alle toernooien</option></select>
+      </div>
+      <div class="card data-table" style="padding:0;">
+        <div class="dt-row rondes-row header">
+          <span>ID</span><span>Toernooi</span><span>Ronde #</span>
+        </div>
+        <div id="rondes-body"><div class="lb-loading"><span>Rondes laden…</span></div></div>
+      </div>
+    </section>
+
+    <!-- ── KLASSEMENT ── -->
+    <section id="klassement" class="anim anim-5">
+      <div class="sec-head">
+        <span class="piece-sm">♛</span>
+        <h2>Klassement</h2>
+        <div class="sec-line"></div>
+        <span class="sec-label">scores &amp; standen</span>
+      </div>
+      <div class="lb-controls">
+        <div class="lb-search-wrap">
+          <span class="search-icon">⌕</span>
+          <input class="lb-search" id="klass-search" type="text" placeholder="Zoek op speler ID of toernooi…" autocomplete="off">
+        </div>
+        <select class="lb-filter" id="klass-filter-toernooi"><option value="">Alle toernooien</option></select>
+        <select class="lb-filter" id="klass-filter-ronde"><option value="">Alle rondes</option></select>
+      </div>
+      <div class="card data-table" style="padding:0;">
+        <div class="dt-row klass-row header">
+          <span>ID</span><span>Toernooi</span><span>Speler</span>
+          <span>Ronde</span><span style="text-align:center;">Score</span><span style="text-align:center;">Gelijkspel</span>
+        </div>
+        <div id="klassement-body"><div class="lb-loading"><span>Klassement laden…</span></div></div>
+      </div>
+    </section>
+
+    <!-- ── BOTTOM: SPOTLIGHT + UPCOMING ── -->
     <div class="bottom-grid anim anim-3">
-
       <section id="spotlight">
-        <div class="sec-head">
-          <span class="piece-sm">♟</span>
-          <h2>Player spotlight</h2>
-          <div class="sec-line"></div>
-        </div>
-        <div class="card spotlight" id="spotlight-card">
-          <div class="lb-loading"><span>Loading spotlight…</span></div>
-        </div>
+        <div class="sec-head"><span class="piece-sm">♟</span><h2>Player spotlight</h2><div class="sec-line"></div></div>
+        <div class="card spotlight" id="spotlight-card"><div class="lb-loading"><span>Loading…</span></div></div>
       </section>
-
       <section id="upcoming">
-        <div class="sec-head">
-          <span class="piece-sm">♝</span>
-          <h2>Upcoming matches</h2>
-          <div class="sec-line"></div>
-        </div>
-        <div class="card" style="padding: 0.75rem;">
-          <div class="match-list" id="match-list">
-            <div class="lb-loading"><span>Loading matches…</span></div>
-          </div>
+        <div class="sec-head"><span class="piece-sm">♝</span><h2>Upcoming matches</h2><div class="sec-line"></div></div>
+        <div class="card" style="padding:0.75rem;">
+          <div class="match-list" id="match-list"><div class="lb-loading"><span>Loading…</span></div></div>
         </div>
       </section>
-
     </div>
 
   </main>
 
   <footer>
     <span>Royal Gambit &copy; 2026</span>
-    <a href="admin-hub.html">Admin panel ↗</a>
   </footer>
 
   <script>
-    // Checkerboard achtergrond
+    // ── CHECKERBOARD ──
     const board = document.getElementById('board');
-    for (let r = 0; r < 12; r++) {
+    for (let r = 0; r < 12; r++)
       for (let c = 0; c < 12; c++) {
         const sq = document.createElement('span');
         sq.style.background = (r + c) % 2 === 0 ? '#c8b48a' : '#1e1a12';
         board.appendChild(sq);
       }
+
+    // ── THEME ──
+    function applyTheme(theme) {
+      document.body.classList.toggle('day', theme === 'day');
+      document.getElementById('theme-icon').textContent  = theme === 'day' ? '🌙' : '☀️';
+      document.getElementById('theme-label').textContent = theme === 'day' ? 'Nacht' : 'Dag';
+      localStorage.setItem('royal-gambit-theme', theme);
+    }
+    applyTheme(localStorage.getItem('royal-gambit-theme') || 'night');
+    document.getElementById('theme-toggle').addEventListener('click', () =>
+      applyTheme(document.body.classList.contains('day') ? 'night' : 'day'));
+
+    // ── HELPERS ──
+    const BASE = 'http://localhost:5080/api';
+    const rankClass = ['gold','silver','bronze'];
+
+    function getInitials(v, a) { return (v?v[0].toUpperCase():'') + (a?a[0].toUpperCase():''); }
+
+    function animateCount(id, target) {
+      const el = document.getElementById(id); if (!el) return;
+      let start = 0;
+      const step = ts => {
+        if (!start) start = ts;
+        const p = Math.min((ts - start) / 900, 1);
+        el.textContent = Math.round((1 - Math.pow(1-p,3)) * target);
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
     }
 
-    const rankClass = ['gold', 'silver', 'bronze'];
-
-    function getInitials(voornaam, achternaam) {
-      const v = voornaam ? voornaam[0].toUpperCase() : '';
-      const a = achternaam ? achternaam[0].toUpperCase() : '';
-      return v + a;
+    function noData(id, msg) {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = `<div class="lb-loading"><span>${msg||'Geen data.'}</span></div>`;
     }
 
-    // Alle data laden en alles invullen
-    function loadAll() {
-      fetch('http://localhost:5080/api/Speler')
-        .then(response => {
-          if (!response.ok) throw new Error('API niet bereikbaar');
-          return response.json();
-        })
+    function addOptions(selId, items) {
+      // items: [{value, label}]
+      const sel = document.getElementById(selId); if (!sel) return;
+      items.forEach(({value, label}) => {
+        const opt = document.createElement('option');
+        opt.value = value; opt.textContent = label;
+        sel.appendChild(opt);
+      });
+    }
+
+    // ════════════════════════════════
+    // SPELERS
+    // ════════════════════════════════
+    let allPlayers = [];
+
+    function renderLeaderboard(data) {
+      const body = document.getElementById('leaderboard-body');
+      body.innerHTML = '';
+      if (!data.length) { noData('leaderboard-body','Geen spelers gevonden.'); return; }
+      data.forEach((s,i) => {
+        const row = document.createElement('div');
+        row.className = 'lb-row data-row';
+        row.style.animationDelay = `${i*0.04}s`;
+        const naam = `${s.voornaam||''} ${s.achternaam||''}`.trim();
+        row.innerHTML = `
+          <div class="lb-rank ${rankClass[i]||''}">${i+1}</div>
+          <div class="lb-name"><div class="lb-avatar">${getInitials(s.voornaam,s.achternaam)}</div>${naam}</div>
+          <div class="lb-val">${s.land||'—'}</div>
+          <div class="lb-val">${s.geslacht||'—'}</div>
+          <div class="lb-elo">${s.fideId||'—'}</div>`;
+        body.appendChild(row);
+      });
+    }
+
+    function applySpelerFilters() {
+      const q  = document.getElementById('lb-search').value.toLowerCase().trim();
+      const la = document.getElementById('filter-land').value;
+      const ge = document.getElementById('filter-geslacht').value;
+      let f = allPlayers;
+      if (q)  f = f.filter(s => (`${s.voornaam||''} ${s.achternaam||''}`).toLowerCase().includes(q) || (s.land||'').toLowerCase().includes(q));
+      if (la) f = f.filter(s => (s.land||'') === la);
+      if (ge) f = f.filter(s => (s.geslacht||'') === ge);
+      renderLeaderboard(f);
+    }
+
+    function loadSpelers() {
+      fetch(`${BASE}/Speler`)
+        .then(r => { if(!r.ok) throw 0; return r.json(); })
         .then(data => {
-          if (data.length === 0) {
-            document.getElementById('leaderboard-body').innerHTML =
-              '<div class="lb-loading"><span>Geen spelers gevonden.</span></div>';
-            document.getElementById('spotlight-card').innerHTML =
-              '<div class="lb-loading"><span>Geen spelers gevonden.</span></div>';
-            document.getElementById('match-list').innerHTML =
-              '<div class="lb-loading"><span>Geen spelers gevonden.</span></div>';
-            return;
-          }
+          if (!data.length) { ['leaderboard-body','recent-grid','spotlight-card','match-list'].forEach(id => noData(id,'Geen spelers.')); return; }
+          animateCount('stat-spelers', data.length);
 
-          // Sorteer op fideId hoogste eerst
-          data.sort((a, b) => (b.fideId || 0) - (a.fideId || 0));
-
-          // ── LEADERBOARD ──
-          const body = document.getElementById('leaderboard-body');
-          body.innerHTML = '';
-          data.forEach((speler, index) => {
-            const rClass = rankClass[index] || '';
-            const initials = getInitials(speler.voornaam, speler.achternaam);
-            const naam = `${speler.voornaam || ''} ${speler.achternaam || ''}`.trim();
-            const row = document.createElement('div');
-            row.className = 'lb-row data-row';
-            row.style.animationDelay = `${index * 0.06}s`;
-            row.innerHTML = `
-              <div class="lb-rank ${rClass}">${index + 1}</div>
-              <div class="lb-name">
-                <div class="lb-avatar">${initials}</div>
-                ${naam}
-              </div>
-              <div class="lb-val">${speler.land || '—'}</div>
-              <div class="lb-val">${speler.geslacht || '—'}</div>
-              <div class="lb-elo">${speler.fideId || '—'}</div>
-            `;
-            body.appendChild(row);
+          // Recent spelers
+          const recent = [...data].reverse().slice(0,3);
+          const grid = document.getElementById('recent-grid'); grid.innerHTML = '';
+          recent.forEach(s => {
+            const naam = `${s.voornaam||''} ${s.achternaam||''}`.trim();
+            const c = document.createElement('div'); c.className = 'recent-card';
+            c.innerHTML = `<div class="recent-avatar">${getInitials(s.voornaam,s.achternaam)}</div>
+              <div class="recent-info">
+                <div class="recent-name">${naam}</div>
+                <div class="recent-meta">${s.land||'Onbekend'} · FIDE ${s.fideId||'—'}</div>
+                <span class="recent-badge">Nieuw</span>
+              </div>`;
+            grid.appendChild(c);
           });
 
-          // ── SPOTLIGHT — #1 speler ──
+          data.sort((a,b) => (b.fideId||0)-(a.fideId||0));
+          allPlayers = data;
+
+          // Land filter
+          const landen = [...new Set(data.map(s=>s.land).filter(Boolean))].sort();
+          addOptions('filter-land', landen.map(l => ({value:l, label:l})));
+          document.getElementById('lb-search').addEventListener('input', applySpelerFilters);
+          document.getElementById('filter-land').addEventListener('change', applySpelerFilters);
+          document.getElementById('filter-geslacht').addEventListener('change', applySpelerFilters);
+          renderLeaderboard(data);
+
+          // Spotlight
           const top = data[0];
-          const topNaam = `${top.voornaam || ''} ${top.achternaam || ''}`.trim();
-          const topInitials = getInitials(top.voornaam, top.achternaam);
+          const topNaam = `${top.voornaam||''} ${top.achternaam||''}`.trim();
           document.getElementById('spotlight-card').innerHTML = `
             <div class="spotlight-header">
-              <div class="spotlight-avatar">${topInitials}</div>
-              <div>
-                <div class="spotlight-name">${topNaam}</div>
-                <div class="spotlight-title">#1 ranked · ${top.land || 'Onbekend'}</div>
-              </div>
+              <div class="spotlight-avatar">${getInitials(top.voornaam,top.achternaam)}</div>
+              <div><div class="spotlight-name">${topNaam}</div>
+              <div class="spotlight-title">#1 ranked · ${top.land||'Onbekend'}</div></div>
             </div>
             <div class="spotlight-stats">
-              <div class="sp-stat">
-                <div class="sp-stat-val">${top.fideId || '—'}</div>
-                <div class="sp-stat-label">FIDE ID</div>
-              </div>
-              <div class="sp-stat">
-                <div class="sp-stat-val">${top.geslacht || '—'}</div>
-                <div class="sp-stat-label">Geslacht</div>
-              </div>
-              <div class="sp-stat">
-                <div class="sp-stat-val">${top.geboortejaar || '—'}</div>
-                <div class="sp-stat-label">Geboortejaar</div>
-              </div>
+              <div class="sp-stat"><div class="sp-stat-val">${top.fideId||'—'}</div><div class="sp-stat-label">FIDE ID</div></div>
+              <div class="sp-stat"><div class="sp-stat-val">${top.geslacht||'—'}</div><div class="sp-stat-label">Geslacht</div></div>
+              <div class="sp-stat"><div class="sp-stat-val">${top.geboortejaar||'—'}</div><div class="sp-stat-label">Geboortejaar</div></div>
             </div>
-            <p class="sp-quote">"Control the center, and the rest of the board will follow."</p>
-          `;
+            <p class="sp-quote">"Control the center, and the rest of the board will follow."</p>`;
 
-          // ── UPCOMING MATCHES — koppel spelers uit de lijst ──
-          const matchList = document.getElementById('match-list');
-          matchList.innerHTML = '';
-
-          // Maak paren van opeenvolgende spelers (1vs2, 3vs4, enz.)
-          // Max 4 matches tonen
-          const maxMatches = Math.min(4, Math.floor(data.length / 2));
-
-          if (maxMatches === 0) {
-            matchList.innerHTML = '<div class="lb-loading"><span>Niet genoeg spelers voor matches.</span></div>';
-            return;
-          }
-
-          for (let i = 0; i < maxMatches; i++) {
-            const wit = data[i * 2];
-            const zwart = data[i * 2 + 1];
-            const witNaam = `${wit.voornaam || ''} ${wit.achternaam || ''}`.trim();
-            const zwartNaam = `${zwart.voornaam || ''} ${zwart.achternaam || ''}`.trim();
-
-            const row = document.createElement('div');
-            row.className = 'match-row';
-            row.innerHTML = `
-              <div class="match-player">${witNaam}</div>
+          // Upcoming (gegenereerd)
+          const ml = document.getElementById('match-list'); ml.innerHTML = '';
+          const max = Math.min(4, Math.floor(data.length/2));
+          if (!max) { noData('match-list','Niet genoeg spelers.'); return; }
+          for (let i=0; i<max; i++) {
+            const w=data[i*2], z=data[i*2+1];
+            const row=document.createElement('div'); row.className='match-row';
+            row.innerHTML=`<div class="match-player">${w.voornaam||''} ${w.achternaam||''}</div>
               <div class="match-vs">vs</div>
-              <div class="match-player right">${zwartNaam}</div>
-              <div class="match-date">Ronde ${i + 1}</div>
-            `;
-            matchList.appendChild(row);
+              <div class="match-player right">${z.voornaam||''} ${z.achternaam||''}</div>
+              <div class="match-date">Ronde ${i+1}</div>`;
+            ml.appendChild(row);
           }
         })
-        .catch(err => {
-          document.getElementById('leaderboard-body').innerHTML =
-            '<div class="lb-loading"><span>Kon spelers niet laden — is de backend actief?</span></div>';
-          document.getElementById('spotlight-card').innerHTML =
-            '<div class="lb-loading"><span>Kon spelers niet laden.</span></div>';
-          document.getElementById('match-list').innerHTML =
-            '<div class="lb-loading"><span>Kon spelers niet laden.</span></div>';
-          console.error('Laad fout:', err);
-        });
+        .catch(() => ['leaderboard-body','recent-grid','spotlight-card','match-list'].forEach(id => noData(id,'Backend niet bereikbaar.')));
     }
 
-    loadAll();
+    // ════════════════════════════════
+    // TOERNOOIEN
+    // ════════════════════════════════
+    let allToernooien = [];
+
+    function toernooiStatus(t) {
+      const s = (t.status||'').toLowerCase();
+      if (s.includes('actief')||s.includes('active')) return {cls:'active', txt:'● Actief'};
+      if (s.includes('upcoming')||s.includes('komend')) return {cls:'upcoming', txt:'○ Upcoming'};
+      return {cls:'finished', txt:'✓ Afgelopen'};
+    }
+
+    function renderToernooien(data) {
+      const grid = document.getElementById('tournaments-grid'); grid.innerHTML = '';
+      if (!data.length) { grid.innerHTML = '<div class="lb-loading" style="grid-column:1/-1;"><span>Geen toernooien gevonden.</span></div>'; return; }
+      data.forEach(t => {
+        const {cls,txt} = toernooiStatus(t);
+        const card = document.createElement('div'); card.className = 't-card';
+        const naam = t.naam || t.toernooiNaam || `Toernooi #${t.toernooiId}`;
+        const startDatum = t.startDatum ? new Date(t.startDatum).toLocaleDateString('nl-BE') : '—';
+        const eindDatum  = t.eindDatum  ? new Date(t.eindDatum).toLocaleDateString('nl-BE')  : '—';
+        card.innerHTML = `
+          <span class="t-status ${cls}">${txt}</span>
+          <div class="t-name">${naam}</div>
+          <div class="t-meta">
+            ${t.locatie     ? `📍 ${t.locatie}<br>`         : ''}
+            ${t.startDatum  ? `Van: ${startDatum}<br>`      : ''}
+            ${t.eindDatum   ? `Tot: ${eindDatum}<br>`       : ''}
+            ${t.timeControle? `⏱ ${t.timeControle}`        : `ID: ${t.toernooiId}`}
+          </div>`;
+        grid.appendChild(card);
+      });
+    }
+
+    function applyToernooiFilters() {
+      const q = document.getElementById('toernooi-search').value.toLowerCase().trim();
+      const st = document.getElementById('toernooi-filter-status').value;
+      let f = allToernooien;
+      if (q)  f = f.filter(t => (t.naam||t.toernooiNaam||'').toLowerCase().includes(q) || String(t.toernooiId).includes(q));
+      if (st) f = f.filter(t => toernooiStatus(t).cls === st);
+      renderToernooien(f);
+    }
+
+    function loadToernooien() {
+      fetch(`${BASE}/Schaak`)
+        .then(r => { if(!r.ok) throw 0; return r.json(); })
+        .then(data => {
+          allToernooien = data;
+          animateCount('stat-toernooien', data.length);
+          document.getElementById('toernooi-search').addEventListener('input', applyToernooiFilters);
+          document.getElementById('toernooi-filter-status').addEventListener('change', applyToernooiFilters);
+          renderToernooien(data);
+
+          // Vul toernooi-dropdowns voor matches, rondes, klassement
+          const opties = data.map(t => ({
+            value: String(t.toernooiId),
+            label: t.naam || t.toernooiNaam || `Toernooi ${t.toernooiId}`
+          }));
+          ['match-filter-toernooi','ronde-filter-toernooi','klass-filter-toernooi'].forEach(id => addOptions(id, opties));
+        })
+        .catch(() => { document.getElementById('tournaments-grid').innerHTML = '<div class="lb-loading" style="grid-column:1/-1;"><span>Backend niet bereikbaar.</span></div>'; });
+    }
+
+    // ════════════════════════════════
+    // MATCHES (Spel)
+    // ════════════════════════════════
+    let allMatches = [];
+
+    function resultaatBadge(r) {
+      if (!r) return '<span class="dt-badge draw">—</span>';
+      if (r === '1-0') return `<span class="dt-badge win">1-0</span>`;
+      if (r === '0-1') return `<span class="dt-badge loss">0-1</span>`;
+      return `<span class="dt-badge draw">${r}</span>`;
+    }
+
+    function renderMatches(data) {
+      const body = document.getElementById('matches-body'); body.innerHTML = '';
+      if (!data.length) { noData('matches-body','Geen matches gevonden.'); return; }
+      data.forEach((m,i) => {
+        const row = document.createElement('div');
+        row.className = 'dt-row matches-row data-row';
+        row.style.animationDelay = `${i*0.03}s`;
+        row.innerHTML = `
+          <div class="dt-cell accent">${m.spelId}</div>
+          <div class="dt-cell muted">#${m.toernooiId}</div>
+          <div class="dt-cell">Wit: ${m.whiteSpelerId}</div>
+          <div class="dt-cell" style="text-align:center;color:var(--muted);font-size:0.65rem;">vs</div>
+          <div class="dt-cell">Zwart: ${m.blackSpelerId}</div>
+          <div class="dt-cell" style="text-align:center;">${resultaatBadge(m.resultaat)}</div>
+          <div class="dt-cell muted" style="text-align:center;">${m.schaakbordNummer||'—'}</div>`;
+        body.appendChild(row);
+      });
+    }
+
+    function applyMatchFilters() {
+      const q  = document.getElementById('match-search').value.toLowerCase().trim();
+      const t  = document.getElementById('match-filter-toernooi').value;
+      const re = document.getElementById('match-filter-resultaat').value;
+      let f = allMatches;
+      if (q)  f = f.filter(m => String(m.whiteSpelerId).includes(q)||String(m.blackSpelerId).includes(q)||String(m.schaakbordNummer).includes(q)||String(m.spelId).includes(q));
+      if (t)  f = f.filter(m => String(m.toernooiId) === t);
+      if (re) f = f.filter(m => (m.resultaat||'') === re);
+      renderMatches(f);
+    }
+
+    function loadMatches() {
+      fetch(`${BASE}/Spel`)
+        .then(r => { if(!r.ok) throw 0; return r.json(); })
+        .then(data => {
+          allMatches = data;
+          animateCount('stat-matches', data.length);
+          document.getElementById('match-search').addEventListener('input', applyMatchFilters);
+          document.getElementById('match-filter-toernooi').addEventListener('change', applyMatchFilters);
+          document.getElementById('match-filter-resultaat').addEventListener('change', applyMatchFilters);
+          renderMatches(data);
+        })
+        .catch(() => noData('matches-body','Backend niet bereikbaar.'));
+    }
+
+    // ════════════════════════════════
+    // RONDES
+    // ════════════════════════════════
+    let allRondes = [];
+
+    function renderRondes(data) {
+      const body = document.getElementById('rondes-body'); body.innerHTML = '';
+      if (!data.length) { noData('rondes-body','Geen rondes gevonden.'); return; }
+      data.forEach((r,i) => {
+        const row = document.createElement('div');
+        row.className = 'dt-row rondes-row data-row';
+        row.style.animationDelay = `${i*0.03}s`;
+        row.innerHTML = `
+          <div class="dt-cell accent">${r.rondeId}</div>
+          <div class="dt-cell muted">#${r.toernooiId}</div>
+          <div class="dt-cell">${r.rondeNummer}</div>`;
+        body.appendChild(row);
+      });
+    }
+
+    function applyRondeFilters() {
+      const q = document.getElementById('ronde-search').value.toLowerCase().trim();
+      const t = document.getElementById('ronde-filter-toernooi').value;
+      let f = allRondes;
+      if (q) f = f.filter(r => String(r.rondeId).includes(q)||String(r.rondeNummer).includes(q));
+      if (t) f = f.filter(r => String(r.toernooiId) === t);
+      renderRondes(f);
+    }
+
+    function loadRondes() {
+      fetch(`${BASE}/Ronde`)
+        .then(r => { if(!r.ok) throw 0; return r.json(); })
+        .then(data => {
+          allRondes = data;
+          animateCount('stat-rondes', data.length);
+          document.getElementById('ronde-search').addEventListener('input', applyRondeFilters);
+          document.getElementById('ronde-filter-toernooi').addEventListener('change', applyRondeFilters);
+
+          // Vul ronde-nummers in klassement filter
+          const nummers = [...new Set(data.map(r=>r.rondeNummer))].sort((a,b)=>a-b);
+          addOptions('klass-filter-ronde', nummers.map(n => ({value:String(n), label:`Ronde ${n}`})));
+
+          renderRondes(data);
+        })
+        .catch(() => noData('rondes-body','Backend niet bereikbaar.'));
+    }
+
+    // ════════════════════════════════
+    // KLASSEMENT
+    // ════════════════════════════════
+    let allKlassement = [];
+
+    function renderKlassement(data) {
+      const body = document.getElementById('klassement-body'); body.innerHTML = '';
+      if (!data.length) { noData('klassement-body','Geen klassement gevonden.'); return; }
+      data.forEach((k,i) => {
+        const row = document.createElement('div');
+        row.className = 'dt-row klass-row data-row';
+        row.style.animationDelay = `${i*0.03}s`;
+        row.innerHTML = `
+          <div class="dt-cell accent">${k.klassementId}</div>
+          <div class="dt-cell muted">#${k.toernooiId}</div>
+          <div class="dt-cell">${k.spelerId}</div>
+          <div class="dt-cell muted">${k.rondeNummer}</div>
+          <div class="dt-cell" style="text-align:center;color:var(--gold);font-weight:500;">${k.score}</div>
+          <div class="dt-cell" style="text-align:center;">${k.gelijkspelScore??'—'}</div>`;
+        body.appendChild(row);
+      });
+    }
+
+    function applyKlassementFilters() {
+      const q = document.getElementById('klass-search').value.toLowerCase().trim();
+      const t = document.getElementById('klass-filter-toernooi').value;
+      const rn= document.getElementById('klass-filter-ronde').value;
+      let f = allKlassement;
+      if (q)  f = f.filter(k => String(k.spelerId).includes(q)||String(k.toernooiId).includes(q)||String(k.klassementId).includes(q));
+      if (t)  f = f.filter(k => String(k.toernooiId) === t);
+      if (rn) f = f.filter(k => String(k.rondeNummer) === rn);
+      renderKlassement(f);
+    }
+
+    function loadKlassement() {
+      fetch(`${BASE}/Klassement`)
+        .then(r => { if(!r.ok) throw 0; return r.json(); })
+        .then(data => {
+          allKlassement = data;
+          animateCount('stat-klassement', data.length);
+          document.getElementById('klass-search').addEventListener('input', applyKlassementFilters);
+          document.getElementById('klass-filter-toernooi').addEventListener('change', applyKlassementFilters);
+          document.getElementById('klass-filter-ronde').addEventListener('change', applyKlassementFilters);
+          renderKlassement(data);
+        })
+        .catch(() => noData('klassement-body','Backend niet bereikbaar.'));
+    }
+
+    // ── START ──
+    loadSpelers();
+    loadToernooien();
+    loadMatches();
+    loadRondes();
+    loadKlassement();
   </script>
 
 </body>

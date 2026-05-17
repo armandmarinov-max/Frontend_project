@@ -4,6 +4,7 @@ document.getElementById("load-spel").addEventListener("click", function()
     fetch('http://localhost:5080/api/spel')
         .then(response => response.json())
         .then(data => {
+            window.alleSpellen = data;
             let results = document.getElementById("results");
             results.innerHTML = "";
             data.forEach(item => {

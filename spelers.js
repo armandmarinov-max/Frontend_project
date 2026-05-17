@@ -4,6 +4,7 @@ document.getElementById("load-spelers").addEventListener("click", function()
     fetch('http://localhost:5080/api/Speler')
         .then(response => response.json())
         .then(data => {
+            window.alleSpelers = data;
             let results = document.getElementById("results");
             results.innerHTML = "";
             data.forEach(item => {
@@ -113,7 +114,3 @@ document.getElementById("update-speler").addEventListener("click", function() {
     alert(`Speler met ID ${spelerId} succesvol geupdated!`);
 })
 });
-
-
-
-                

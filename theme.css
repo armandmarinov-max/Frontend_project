@@ -1,0 +1,63 @@
+/* ── ROYAL GAMBIT THEME CSS ──
+   Voeg toe aan elke pagina: <link rel="stylesheet" href="theme.css">
+   Zet het VOOR je eigen styles.css
+*/
+
+/* NACHT MODUS (standaard) */
+:root {
+  --bg:       #0c0b09;
+  --bg2:      #141210;
+  --bg3:      #1c1a16;
+  --bg4:      #242118;
+  --gold:     #c9a84c;
+  --gold2:    #e8c97a;
+  --gold-dim: #6b5420;
+  --cream:    #ede5d0;
+  --muted:    #7a7160;
+  --border:   rgba(201,168,76,0.15);
+  --border2:  rgba(201,168,76,0.30);
+  --nav-bg:   rgba(12,11,9,0.95);
+}
+
+/* DAG MODUS */
+body.day {
+  --bg:       #f5f0e8;
+  --bg2:      #ede5d0;
+  --bg3:      #e0d5be;
+  --bg4:      #d4c8b0;
+  --gold:     #7a5518;
+  --gold2:    #9a7028;
+  --gold-dim: #b8962a;
+  --cream:    #1c1a14;
+  --muted:    #6b5e44;
+  --border:   rgba(100,70,20,0.18);
+  --border2:  rgba(100,70,20,0.35);
+  --nav-bg:   rgba(245,240,232,0.97);
+}
+
+/* Zachte overgang bij wisselen */
+body {
+  transition: background 0.35s ease, color 0.35s ease;
+}
+
+/* THEME TOGGLE KNOP - geldig op alle pagina's */
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border2);
+  border-radius: 2px;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.theme-toggle:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.theme-toggle .icon { font-size: 0.85rem; }

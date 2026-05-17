@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spel</title>
+    <link rel="stylesheet" href="theme.css" />  <!-- voor je styles.css -->
+<script src="theme.js">
+  (function() {
+    if (localStorage.getItem('royal-gambit-theme') === 'day')
+      document.body.classList.add('day');
+  })();
+</script>
 </head>
 <body>
 
@@ -11,7 +18,8 @@
       <h2 id="Get-Spel-title">GET alle Spel</h2>
       <div class="Get-Spel">
         <button id="load-spel">Laad Spel</button>
-        <input id="search" type="search" placeholder="Zoek op naam..." />
+        <input id="search-id" type="number" placeholder="Zoek op spel ID..." />
+        <button id="search-spel-id">Zoek</button>
         <span id="status" role="status" aria-live="polite"></span>
       </div>
       <div id="results" class="grid" aria-live="polite"></div>
@@ -54,6 +62,47 @@
     <input id="update-schaakbordnummer" type="number" placeholder="Geef het schaakbordnummer" />
   </div>
 </section>
+    <script>
+      window.alleSpellen = [];
+      document.addEventListener("DOMContentLoaded", function() {
+        function toonSpelKaart(s, results) {
+          const div = document.createElement("div");
+          div.className = "Get-Spel";
+          div.innerHTML = "<h3>" + (s.spelId ?? "—") + "</h3>"
+            + "<p>ToernooiID: " + (s.toernooiId ?? "—") + "</p>"
+            + "<p>RondeID: " + (s.rondeId ?? "—") + "</p>"
+            + "<p>WhiteSpeler: " + (s.whiteSpelerId ?? "—") + "</p>"
+            + "<p>ZwarteSpeler: " + (s.blackSpelerId ?? "—") + "</p>"
+            + "<p>Resultaat: " + (s.resultaat ?? "—") + "</p>"
+            + "<p>SchaakbordNummer: " + (s.schaakbordNummer ?? "—") + "</p>";
+          results.appendChild(div);
+        }
+        function zoekOpId() {
+          const id = document.getElementById("search-id").value.trim();
+          if (!id) { alert("Geef een spel ID op."); return; }
+          const status = document.getElementById("status");
+          const results = document.getElementById("results");
+          if (window.alleSpellen.length > 0) {
+            const gevonden = window.alleSpellen.filter(s => String(s.spelId) === id);
+            if (gevonden.length > 0) {
+              status.textContent = ""; results.innerHTML = "";
+              gevonden.forEach(s => toonSpelKaart(s, results)); return;
+            }
+          }
+          status.textContent = "Laden…";
+          fetch("http://localhost:5080/api/Spel/" + id)
+            .then(r => { if (!r.ok) throw new Error("Spel niet gevonden"); return r.json(); })
+            .then(data => {
+              status.textContent = ""; results.innerHTML = "";
+              const lijst = Array.isArray(data) ? data : [data];
+              lijst.forEach(s => toonSpelKaart(s, results));
+            })
+            .catch(err => { status.textContent = err.message; });
+        }
+        document.getElementById("search-spel-id").addEventListener("click", zoekOpId);
+        document.getElementById("search-id").addEventListener("keydown", function(e) { if (e.key === "Enter") zoekOpId(); });
+      });
+    </script>
      <script src="spel.js"></script>
     <link rel="stylesheet" href="styles.css" />
 

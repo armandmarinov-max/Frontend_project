@@ -3,6 +3,7 @@ document.getElementById("load-rondes").addEventListener("click", function() {
     fetch('http://localhost:5080/api/Ronde')  // ✅ Ronde niet Rondes
         .then(response => response.json())
         .then(data => {
+            window.alleRondes = data;
             let results = document.getElementById("results");
             results.innerHTML = "";
             data.forEach(item => {

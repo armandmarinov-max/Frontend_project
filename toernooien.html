@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toernooien</title>
+    <link rel="stylesheet" href="theme.css" />  <!-- voor je styles.css -->
+     <script src="theme.js">
+      (function() {
+    if (localStorage.getItem('royal-gambit-theme') === 'day')
+      document.body.classList.add('day');
+  })();
+     </script>
 </head>
 <body>
     
@@ -11,7 +18,8 @@
       <h2 id="Get-Toernooien-title">GET alle Toernooien</h2>
       <div class="Get-Toernooien">
         <button id="load-toernooien">Laad Toernooien</button>
-        <input id="search" type="search" placeholder="Zoek op naam..." />
+        <input id="search-id" type="number" placeholder="Zoek op toernooi ID..." />
+        <button id="search-toernooi-id">Zoek</button>
         <span id="status" role="status" aria-live="polite"></span>
       </div>
       <div id="results" class="grid" aria-live="polite"></div>
@@ -57,6 +65,48 @@
       <div id="results" class="grid" aria-live="polite"></div>
     </main>
 </body>
+      <script>
+      window.alleToernooien = [];
+      document.addEventListener("DOMContentLoaded", function() {
+        function toonToernooiKaart(t, results) {
+          const div = document.createElement("div");
+          div.className = "Get-Toernooien";
+          const sd = t.startDatum ? new Date(t.startDatum).toLocaleDateString("nl-BE") : "—";
+          const ed = t.eindDatum  ? new Date(t.eindDatum).toLocaleDateString("nl-BE")  : "—";
+          div.innerHTML = "<h3>" + (t.toernooiId ?? "—") + "</h3>"
+            + "<p>Naam: " + (t.naam ?? "—") + "</p>"
+            + "<p>Locatie: " + (t.locatie ?? "—") + "</p>"
+            + "<p>StartDatum: " + sd + "</p>"
+            + "<p>EindDatum: " + ed + "</p>"
+            + "<p>TimeControle: " + (t.timeControle ?? "—") + "</p>";
+          results.appendChild(div);
+        }
+        function zoekOpId() {
+          const id = document.getElementById("search-id").value.trim();
+          if (!id) { alert("Geef een toernooi ID op."); return; }
+          const status = document.getElementById("status");
+          const results = document.getElementById("results");
+          if (window.alleToernooien.length > 0) {
+            const gevonden = window.alleToernooien.filter(t => String(t.toernooiId) === id);
+            if (gevonden.length > 0) {
+              status.textContent = ""; results.innerHTML = "";
+              gevonden.forEach(t => toonToernooiKaart(t, results)); return;
+            }
+          }
+          status.textContent = "Laden…";
+          fetch("http://localhost:5080/api/Schaak/" + id)
+            .then(r => { if (!r.ok) throw new Error("Toernooi niet gevonden"); return r.json(); })
+            .then(data => {
+              status.textContent = ""; results.innerHTML = "";
+              const lijst = Array.isArray(data) ? data : [data];
+              lijst.forEach(t => toonToernooiKaart(t, results));
+            })
+            .catch(err => { status.textContent = err.message; });
+        }
+        document.getElementById("search-toernooi-id").addEventListener("click", zoekOpId);
+        document.getElementById("search-id").addEventListener("keydown", function(e) { if (e.key === "Enter") zoekOpId(); });
+      });
+    </script>
       <script src="toernooien.js"></script>
       <link rel="stylesheet" href="styles.css" />
     </main>

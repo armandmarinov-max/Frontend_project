@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Klassement</title>
+    <link rel="stylesheet" href="theme.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="theme.js"></script>
 </head>
 <body>
 
@@ -11,7 +14,8 @@
       <h2 id="Get-Klassement-title">GET alle Klassement</h2>
       <div class="Get-Klassement">
         <button id="load-klassement">Laad Klassement</button>
-        <input id="search" type="search" placeholder="Zoek op naam..." />
+        <input id="search-id" type="number" placeholder="Zoek op klassement ID..." />
+        <button id="search-klassement-id">Zoek</button>
         <span id="status" role="status" aria-live="polite"></span>
       </div>
       <div id="results" class="grid" aria-live="polite"></div>
@@ -21,41 +25,101 @@
       <h2 id="Post-Klassement-title">Voeg een nieuwe Klassement toe</h2>
       <div class="Post-Klassement">
         <button id="add-klassement">Voeg Klassement</button>
-        <input id="klassement_id" type="number" placeholder="geef een klassent id" />
+        <input id="klassement_id" type="number" placeholder="geef een klassement id" />
         <input id="toernooi_id" type="number" placeholder="geef een toernooi id" />
         <input id="speler_id" type="number" placeholder="geef een speler id" />
         <input id="rondenummer" type="number" placeholder="geef een rondenummer" />
         <input id="score" type="number" placeholder="geef een score" />
         <input id="gelijkspelscore" type="number" placeholder="geef een gelijkspelscore" />
-        <span id="status" role="status" aria-live="polite"></span>
+        <span id="status-post" role="status" aria-live="polite"></span>
       </div>
-      </section>
-   
-      <section aria-labelledby="Delete-Klassement-title">
+    </section>
+
+    <section aria-labelledby="Delete-Klassement-title">
       <h2 id="Delete-Klassement-title">Verwijder een Klassement</h2>
       <div class="Delete-Klassement">
         <button id="delete-klassement">Verwijder Klassement</button>
-        <input id="delete-klassement_id" type="number" placeholder="geef een klassent id" />
-        <span id="status" role="status" aria-live="polite"></span>
+        <input id="delete-klassement_id" type="number" placeholder="geef een klassement id" />
+        <span id="status-delete" role="status" aria-live="polite"></span>
       </div>
-      </section>
-     
-      <section aria-labelledby="Put-Klassement-title">
+    </section>
+
+    <section aria-labelledby="Put-Klassement-title">
       <h2 id="Put-Klassement-title">Update een Klassement</h2>
       <div class="Put-Klassement">
         <button id="update-klassement">Update Klassement</button>
-        <input id="update-klassement_id" type="number" placeholder="geef een klassent id" />
+        <input id="update-klassement_id" type="number" placeholder="geef een klassement id" />
         <input id="update-toernooi_id" type="number" placeholder="geef een toernooi id" />
         <input id="update-speler_id" type="number" placeholder="geef een speler id" />
         <input id="update-rondenummer" type="number" placeholder="geef een rondenummer" />
         <input id="update-score" type="number" placeholder="geef een score" />
         <input id="update-gelijkspelscore" type="number" placeholder="geef een gelijkspelscore" />
-        <span id="status" role="status" aria-live="polite"></span>
+        <span id="status-put" role="status" aria-live="polite"></span>
       </div>
-      </section>
-      <div id="results" class="grid" aria-live="polite"></div>
-      <script src="klassement.js"></script>
-      <link rel="stylesheet" href="styles.css" />
-    </main>
+    </section>
+
+    <script>
+      window.alleKlassement = [];
+
+      document.addEventListener('DOMContentLoaded', function() {
+
+        function toonKlassementKaart(k, results) {
+          var div = document.createElement('div');
+          div.className = 'Get-Klassement';
+          div.innerHTML =
+            '<h3>ID: ' + (k.klassementId != null ? k.klassementId : '---') + '</h3>' +
+            '<p>ToernooiID: ' + (k.toernooiId != null ? k.toernooiId : '---') + '</p>' +
+            '<p>SpelerID: ' + (k.spelerId != null ? k.spelerId : '---') + '</p>' +
+            '<p>RondeNummer: ' + (k.rondeNummer != null ? k.rondeNummer : '---') + '</p>' +
+            '<p>Score: ' + (k.score != null ? k.score : '---') + '</p>' +
+            '<p>GelijkspelScore: ' + (k.gelijkspelScore != null ? k.gelijkspelScore : '---') + '</p>';
+          results.appendChild(div);
+        }
+
+        function zoekOpId() {
+          var id = document.getElementById('search-id').value.trim();
+          if (!id) { alert('Geef een klassement ID op.'); return; }
+
+          var status = document.getElementById('status');
+          var results = document.getElementById('results');
+
+          if (window.alleKlassement.length > 0) {
+            var gevonden = window.alleKlassement.filter(function(k) {
+              return String(k.klassementId) === id;
+            });
+            if (gevonden.length > 0) {
+              status.textContent = '';
+              results.innerHTML = '';
+              gevonden.forEach(function(k) { toonKlassementKaart(k, results); });
+              return;
+            }
+          }
+
+          status.textContent = 'Laden...';
+          fetch('http://localhost:5080/api/Klassement/' + id)
+            .then(function(r) {
+              if (!r.ok) throw new Error('Klassement niet gevonden');
+              return r.json();
+            })
+            .then(function(data) {
+              status.textContent = '';
+              results.innerHTML = '';
+              var lijst = Array.isArray(data) ? data : [data];
+              lijst.forEach(function(k) { toonKlassementKaart(k, results); });
+            })
+            .catch(function(err) {
+              status.textContent = err.message;
+            });
+        }
+
+        document.getElementById('search-klassement-id').addEventListener('click', zoekOpId);
+        document.getElementById('search-id').addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') zoekOpId();
+        });
+      });
+    </script>
+
+    <script src="klassement.js"></script>
+
 </body>
 </html>

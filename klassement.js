@@ -3,6 +3,7 @@ document.getElementById("load-klassement").addEventListener("click", function() 
     fetch('http://localhost:5080/api/Klassement')
         .then(response => response.json())
         .then(data => {
+            window.alleKlassement = data;
             let results = document.getElementById("results");
             results.innerHTML = "";
             data.forEach(item => {

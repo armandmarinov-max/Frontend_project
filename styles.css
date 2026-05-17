@@ -23,6 +23,25 @@
   --transition:     0.18s ease;
 }
 
+/* ── DAG MODUS ── */
+body.day {
+  --clr-bg:         #f5f0e8;
+  --clr-surface:    #ede5d0;
+  --clr-surface2:   #e0d5be;
+  --clr-border:     #c8b898;
+  --clr-border2:    #b8a880;
+  --clr-gold:       #7a5518;
+  --clr-gold-light: #9a7028;
+  --clr-gold-dim:   #b8962a;
+  --clr-text:       #1c1a14;
+  --clr-muted:      #6b5e44;
+  --clr-danger:     #c0392b;
+  --clr-danger-dim: #e8c0bc;
+  --clr-success:    #2e7d5e;
+  --clr-update:     #1e5a8a;
+  --clr-update-dim: #c0d8f0;
+}
+
 /* ── Reset & Base ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -34,6 +53,7 @@ body {
   color: var(--clr-text);
   min-height: 100vh;
   line-height: 1.6;
+  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 /* ── Page Layout ── */

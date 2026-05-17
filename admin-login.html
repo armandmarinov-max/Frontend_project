@@ -7,6 +7,19 @@
   <link rel="icon" href="data:,">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@400;500&family=Lora:wght@400;500&display=swap" rel="stylesheet"/>
   <style>
+
+   :root {
+  --bg: #0c0b09; --bg2: #141210; --bg3: #1c1a16; --bg4: #242118;
+  --gold: #c9a84c; --gold-dim: #6b5420; --cream: #ede5d0;
+  --muted: #7a7160; --border: rgba(201,168,76,0.15);
+  --border2: rgba(201,168,76,0.30); --nav-bg: rgba(12,11,9,0.95);
+}
+body.day {
+  --bg: #f5f0e8; --bg2: #ede5d0; --bg3: #e0d5be; --bg4: #d4c8b0;
+  --gold: #7a5518; --gold-dim: #b8962a; --cream: #1c1a14;
+  --muted: #6b5e44; --border: rgba(100,70,20,0.18);
+  --border2: rgba(100,70,20,0.35); --nav-bg: rgba(245,240,232,0.97);
+} 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -178,6 +191,13 @@
       to   { opacity: 1; transform: translateY(0); }
     }
   </style>
+  <link rel="stylesheet" href="theme.css" />  <!-- voor je styles.css -->
+<script src="theme.js">
+  (function() {
+    if (localStorage.getItem('royal-gambit-theme') === 'day')
+      document.body.classList.add('day');
+  })();
+</script>
 </head>
 <body>
 

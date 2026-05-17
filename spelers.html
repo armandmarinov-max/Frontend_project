@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spelers</title>
+    <link rel="stylesheet" href="theme.css" />  <!-- voor je styles.css -->
+<script src="theme.js">
+  (function() {
+    if (localStorage.getItem('royal-gambit-theme') === 'day')
+      document.body.classList.add('day');
+  })();
+</script>
 </head>
 <body>
    
@@ -11,7 +18,8 @@
       <h2 id="Get-Spelers-title">GET alle Spelers</h2>
       <div class="Get-Spelers">
         <button id="load-spelers">Laad Spelers</button>
-        <input id="search" type="search" placeholder="Zoek op naam..." />
+        <input id="search-id" type="number" placeholder="Zoek op speler ID..." />
+        <button id="search-speler-id">Zoek</button>
         <span id="status" role="status" aria-live="polite"></span>
       </div>
       <div id="results" class="grid" aria-live="polite"></div>
@@ -58,6 +66,73 @@
       </div>
       <div id="results" class="grid" aria-live="polite"></div>
     </section>
+    <script>
+      // Globale lijst van geladen spelers (wordt gevuld door spelers.js via window.alleSpelers)
+      window.alleSpelers = [];
+
+      document.addEventListener('DOMContentLoaded', function() {
+
+        function toonSpelerKaart(s, results) {
+          const div = document.createElement('div');
+          div.className = 'Get-Spelers';
+          div.innerHTML = `
+            <h3>${s.spelerId ?? s.speler_id ?? '—'}</h3>
+            <p>Voornaam: ${s.voornaam ?? '—'}</p>
+            <p>Achternaam: ${s.achternaam ?? '—'}</p>
+            <p>FIDE ID: ${s.fideId ?? s.fide_id ?? '—'}</p>
+            <p>Land: ${s.land ?? '—'}</p>
+            <p>Geslacht: ${s.geslacht ?? '—'}</p>
+            <p>Geboortejaar: ${s.geboortejaar ?? '—'}</p>
+          `;
+          results.appendChild(div);
+        }
+
+        function zoekOpId() {
+          const spelerId = document.getElementById('search-id').value.trim();
+          if (!spelerId) { alert('Geef een speler ID op.'); return; }
+
+          const status  = document.getElementById('status');
+          const results = document.getElementById('results');
+
+          // Eerst proberen uit de al geladen lijst te filteren
+          if (window.alleSpelers.length > 0) {
+            const gevonden = window.alleSpelers.filter(s =>
+              String(s.spelerId ?? s.speler_id ?? '') === spelerId
+            );
+            if (gevonden.length > 0) {
+              status.textContent = '';
+              results.innerHTML = '';
+              gevonden.forEach(s => toonSpelerKaart(s, results));
+              return;
+            }
+          }
+
+          // Fallback: directe API-call
+          status.textContent = 'Laden…';
+          fetch(`http://localhost:5080/api/Speler/${spelerId}`)
+            .then(response => {
+              if (!response.ok) throw new Error('Speler niet gevonden');
+              return response.json();
+            })
+            .then(data => {
+              status.textContent = '';
+              results.innerHTML = '';
+              // API kan array of enkel object teruggeven
+              const lijst = Array.isArray(data) ? data : [data];
+              lijst.forEach(s => toonSpelerKaart(s, results));
+            })
+            .catch(err => {
+              status.textContent = err.message;
+            });
+        }
+
+        document.getElementById('search-speler-id').addEventListener('click', zoekOpId);
+
+        document.getElementById('search-id').addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') zoekOpId();
+        });
+      });
+    </script>
     <script src="spelers.js"></script>
     <link rel="stylesheet" href="styles.css" />
 

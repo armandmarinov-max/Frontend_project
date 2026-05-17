@@ -6,21 +6,41 @@
   <title>Admin Editing — Chess Hub</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
+
+    :root {
+  --bg: #0c0b09; --bg2: #141210; --bg3: #1c1a16; --bg4: #242118;
+  --gold: #c9a84c; --gold-dim: #6b5420; --cream: #ede5d0;
+  --muted: #7a7160; --border: rgba(201,168,76,0.15);
+  --border2: rgba(201,168,76,0.30); --nav-bg: rgba(12,11,9,0.95);
+}
+body.day, html.day body {
+  --bg: #f5f0e8; --bg2: #ede5d0; --bg3: #e0d5be; --bg4: #d4c8b0;
+  --gold: #7a5518; --gold-dim: #b8962a; --cream: #1c1a14;
+  --muted: #6b5e44; --border: rgba(100,70,20,0.18);
+  --border2: rgba(100,70,20,0.35); --nav-bg: rgba(245,240,232,0.97);
+}
+
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* eigen variabelen voor admin-hub */
     :root {
       --dark: #0e0e0e;
       --dark2: #1a1a1a;
       --dark3: #242424;
-      --light: #f5f0e8;
-      --cream: #e8dfc8;
-      --gold: #c8a84b;
-      --gold-dim: #a07830;
       --white-sq: #d4c49a;
       --black-sq: #2c2416;
       --text: #f5f0e8;
       --text-dim: #9a8f78;
-      --border: rgba(200,168,75,0.2);
+    }
+
+    /* dag modus overrides voor admin-hub specifieke variabelen */
+    body.day, html.day body {
+      --dark: #f5f0e8;
+      --dark2: #ede5d0;
+      --dark3: #e0d5be;
+      --text: #1c1a14;
+      --text-dim: #6b5e44;
     }
 
     html, body {
@@ -242,6 +262,13 @@
       animation: fadeUp 0.5s ease 0.6s both;
     }
   </style>
+  <script>
+    // Thema onmiddellijk toepassen — gebruikt <html> want <body> bestaat nog niet
+    (function() {
+      if (localStorage.getItem('royal-gambit-theme') === 'day')
+        document.documentElement.classList.add('day');
+    })();
+  </script>
 </head>
 <body>
 
@@ -315,6 +342,7 @@
     <footer>Restricted access &nbsp;·&nbsp; Authorized personnel only</footer>
 
   </div>
+  
 
 </body>
 </html>
