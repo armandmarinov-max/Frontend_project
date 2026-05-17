@@ -34,7 +34,6 @@
       overflow-x: hidden;
     }
 
-    /* ── BOARD PATTERN ── */
     .board-bg {
       position: fixed; inset: 0; z-index: 0; pointer-events: none;
       display: grid;
@@ -44,7 +43,6 @@
     }
     .board-bg span { display: block; }
 
-    /* ── NAV ── */
     nav {
       position: sticky; top: 0; z-index: 100;
       background: rgba(12,11,9,0.92);
@@ -86,10 +84,8 @@
     }
     .nav-admin:hover { background: var(--gold); color: var(--bg); }
 
-    /* ── WRAPPER ── */
     .page { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 1.5rem 4rem; }
 
-    /* ── HERO ── */
     .hero {
       padding: 5rem 0 3.5rem;
       display: grid;
@@ -114,10 +110,7 @@
       line-height: 1.05;
       color: var(--cream);
     }
-    .hero h1 em {
-      font-style: italic;
-      color: var(--gold);
-    }
+    .hero h1 em { font-style: italic; color: var(--gold); }
     .hero-sub {
       margin-top: 1rem;
       font-size: 0.95rem;
@@ -137,7 +130,6 @@
       50%      { transform: translateY(-12px) rotate(3deg); }
     }
 
-    /* ── SECTION HEADERS ── */
     .sec-head {
       display: flex; align-items: center; gap: 1rem;
       margin: 3rem 0 1.25rem;
@@ -160,7 +152,6 @@
       white-space: nowrap;
     }
 
-    /* ── CARDS BASE ── */
     .card {
       background: var(--bg2);
       border: 1px solid var(--border);
@@ -170,7 +161,6 @@
     }
     .card:hover { border-color: var(--border2); }
 
-    /* ── TOURNAMENT OVERVIEW ── */
     .tournaments { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 1rem; }
     .t-card {
       background: var(--bg3);
@@ -215,10 +205,7 @@
       letter-spacing: 0.06em;
       line-height: 1.8;
     }
-    .t-players {
-      margin-top: 0.75rem;
-      display: flex; gap: 4px;
-    }
+    .t-players { margin-top: 0.75rem; display: flex; gap: 4px; }
     .t-players span {
       width: 8px; height: 8px;
       border-radius: 50%;
@@ -231,7 +218,7 @@
     .leaderboard { overflow: hidden; }
     .lb-row {
       display: grid;
-      grid-template-columns: 2rem 1fr 5rem 5rem 5rem;
+      grid-template-columns: 2rem 1fr 6rem 6rem 5rem;
       gap: 0.5rem;
       align-items: center;
       padding: 0.75rem 1.25rem;
@@ -279,9 +266,12 @@
     }
     .lb-val {
       font-family: 'DM Mono', monospace;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       color: var(--cream);
       text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .lb-elo {
       font-family: 'DM Mono', monospace;
@@ -291,11 +281,27 @@
       font-weight: 500;
     }
 
-    /* ── TWO COLUMN BOTTOM ── */
+    /* Loading & error states */
+    .lb-loading {
+      padding: 2rem;
+      text-align: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+    .lb-loading span {
+      display: inline-block;
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50%       { opacity: 1; }
+    }
+
     .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
     @media (max-width: 640px) { .bottom-grid { grid-template-columns: 1fr; } }
 
-    /* ── PLAYER SPOTLIGHT ── */
     .spotlight { display: flex; flex-direction: column; gap: 1rem; }
     .spotlight-header { display: flex; gap: 1rem; align-items: center; }
     .spotlight-avatar {
@@ -321,11 +327,7 @@
       color: var(--gold);
       margin-top: 2px;
     }
-    .spotlight-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 0.5rem;
-    }
+    .spotlight-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; }
     .sp-stat {
       background: var(--bg3);
       border: 1px solid var(--border);
@@ -356,7 +358,6 @@
       line-height: 1.6;
     }
 
-    /* ── UPCOMING MATCHES ── */
     .match-list { display: flex; flex-direction: column; gap: 0.6rem; }
     .match-row {
       background: var(--bg3);
@@ -370,11 +371,7 @@
       transition: border-color 0.2s;
     }
     .match-row:hover { border-color: var(--border2); }
-    .match-player {
-      font-family: 'Lora', serif;
-      font-size: 0.85rem;
-      color: var(--cream);
-    }
+    .match-player { font-family: 'Lora', serif; font-size: 0.85rem; color: var(--cream); }
     .match-player.right { text-align: right; }
     .match-vs {
       font-family: 'DM Mono', monospace;
@@ -390,17 +387,7 @@
       letter-spacing: 0.06em;
       white-space: nowrap;
     }
-    .match-empty {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--muted);
-      text-align: center;
-      padding: 1.5rem;
-      border: 1px dashed var(--border);
-      border-radius: 3px;
-    }
 
-    /* ── FOOTER ── */
     footer {
       position: relative; z-index: 1;
       border-top: 1px solid var(--border);
@@ -427,7 +414,6 @@
       text-decoration: none;
     }
 
-    /* ── ANIMATIONS ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -437,14 +423,17 @@
     .anim-2 { animation-delay: 0.2s; }
     .anim-3 { animation-delay: 0.3s; }
     .anim-4 { animation-delay: 0.4s; }
+
+    /* Row fade-in when loaded */
+    .lb-row.data-row {
+      animation: fadeUp 0.4s ease both;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Checkerboard background -->
   <div class="board-bg" aria-hidden="true" id="board"></div>
 
-  <!-- Nav -->
   <nav>
     <a href="index.html" class="nav-logo">♔ <span>Royal Gambit</span></a>
     <div class="nav-links">
@@ -455,10 +444,8 @@
     </div>
   </nav>
 
-  <!-- Main content -->
   <main class="page">
 
-    <!-- Hero -->
     <section class="hero">
       <div>
         <p class="hero-eyebrow">Welcome to the board</p>
@@ -468,7 +455,6 @@
       <div class="hero-piece" aria-hidden="true">♛</div>
     </section>
 
-    <!-- Tournaments -->
     <section id="tournaments" class="anim anim-1">
       <div class="sec-head">
         <span class="piece-sm">♜</span>
@@ -477,139 +463,73 @@
         <span class="sec-label">Overview</span>
       </div>
       <div class="tournaments">
-
         <div class="t-card">
           <span class="t-status active">● Active</span>
           <div class="t-name">Spring Open 2025</div>
-          <div class="t-meta">
-            Format: Swiss<br>
-            Round 4 of 7<br>
-            Players: 12
-          </div>
+          <div class="t-meta">Format: Swiss<br>Round 4 of 7<br>Players: 12</div>
           <div class="t-players">
             <span class="filled"></span><span class="filled"></span><span class="filled"></span>
             <span class="filled"></span><span class="filled"></span><span></span><span></span><span></span>
           </div>
         </div>
-
         <div class="t-card">
           <span class="t-status upcoming">○ Upcoming</span>
           <div class="t-name">Summer Blitz Series</div>
-          <div class="t-meta">
-            Format: Blitz<br>
-            Starts: 15 Jun 2025<br>
-            Players: 0 / 16
-          </div>
+          <div class="t-meta">Format: Blitz<br>Starts: 15 Jun 2025<br>Players: 0 / 16</div>
           <div class="t-players">
             <span></span><span></span><span></span><span></span>
             <span></span><span></span><span></span><span></span>
           </div>
         </div>
-
         <div class="t-card">
           <span class="t-status finished">✓ Finished</span>
           <div class="t-name">Winter Classic 2024</div>
-          <div class="t-meta">
-            Format: Round Robin<br>
-            Winner: J. Vermeulen<br>
-            Players: 8
-          </div>
+          <div class="t-meta">Format: Round Robin<br>Winner: J. Vermeulen<br>Players: 8</div>
           <div class="t-players">
             <span class="filled"></span><span class="filled"></span><span class="filled"></span>
             <span class="filled"></span><span class="filled"></span><span class="filled"></span>
             <span class="filled"></span><span class="filled"></span>
           </div>
         </div>
-
       </div>
     </section>
 
-    <!-- Leaderboard -->
+    <!-- Leaderboard - gevuld met echte data -->
     <section id="rankings" class="anim anim-2">
       <div class="sec-head">
         <span class="piece-sm">♞</span>
         <h2>Player rankings</h2>
         <div class="sec-line"></div>
-        <span class="sec-label">by ELO</span>
+        <span class="sec-label">by FIDE ID</span>
       </div>
       <div class="card leaderboard" style="padding:0;">
         <div class="lb-row header">
           <span>#</span>
           <span>Player</span>
-          <span style="text-align:center;">W</span>
-          <span style="text-align:center;">L</span>
-          <span style="text-align:center;">ELO</span>
+          <span style="text-align:center;">Land</span>
+          <span style="text-align:center;">Geslacht</span>
+          <span style="text-align:center;">FIDE</span>
         </div>
-        <div class="lb-row">
-          <div class="lb-rank gold">1</div>
-          <div class="lb-name"><div class="lb-avatar">JV</div>J. Vermeulen</div>
-          <div class="lb-val">18</div><div class="lb-val">4</div>
-          <div class="lb-elo">1842</div>
-        </div>
-        <div class="lb-row">
-          <div class="lb-rank silver">2</div>
-          <div class="lb-name"><div class="lb-avatar">SK</div>S. Koen</div>
-          <div class="lb-val">15</div><div class="lb-val">6</div>
-          <div class="lb-elo">1790</div>
-        </div>
-        <div class="lb-row">
-          <div class="lb-rank bronze">3</div>
-          <div class="lb-name"><div class="lb-avatar">LD</div>L. De Backer</div>
-          <div class="lb-val">14</div><div class="lb-val">7</div>
-          <div class="lb-elo">1755</div>
-        </div>
-        <div class="lb-row">
-          <div class="lb-rank">4</div>
-          <div class="lb-name"><div class="lb-avatar">TP</div>T. Peeters</div>
-          <div class="lb-val">12</div><div class="lb-val">9</div>
-          <div class="lb-elo">1703</div>
-        </div>
-        <div class="lb-row">
-          <div class="lb-rank">5</div>
-          <div class="lb-name"><div class="lb-avatar">AM</div>A. Martens</div>
-          <div class="lb-val">10</div><div class="lb-val">11</div>
-          <div class="lb-elo">1658</div>
+        <!-- Rijen worden hier dynamisch ingeladen -->
+        <div id="leaderboard-body">
+          <div class="lb-loading"><span>Loading players…</span></div>
         </div>
       </div>
     </section>
 
-    <!-- Spotlight + Upcoming -->
     <div class="bottom-grid anim anim-3">
 
-      <!-- Player Spotlight -->
       <section id="spotlight">
         <div class="sec-head">
           <span class="piece-sm">♟</span>
           <h2>Player spotlight</h2>
           <div class="sec-line"></div>
         </div>
-        <div class="card spotlight">
-          <div class="spotlight-header">
-            <div class="spotlight-avatar">♔</div>
-            <div>
-              <div class="spotlight-name">J. Vermeulen</div>
-              <div class="spotlight-title">Current champion · #1 ranked</div>
-            </div>
-          </div>
-          <div class="spotlight-stats">
-            <div class="sp-stat">
-              <div class="sp-stat-val">1842</div>
-              <div class="sp-stat-label">ELO</div>
-            </div>
-            <div class="sp-stat">
-              <div class="sp-stat-val">82%</div>
-              <div class="sp-stat-label">Win rate</div>
-            </div>
-            <div class="sp-stat">
-              <div class="sp-stat-val">22</div>
-              <div class="sp-stat-label">Games</div>
-            </div>
-          </div>
-          <p class="sp-quote">"Control the center, and the rest of the board will follow."</p>
+        <div class="card spotlight" id="spotlight-card">
+          <div class="lb-loading"><span>Loading spotlight…</span></div>
         </div>
       </section>
 
-      <!-- Upcoming Matches -->
       <section id="upcoming">
         <div class="sec-head">
           <span class="piece-sm">♝</span>
@@ -617,31 +537,8 @@
           <div class="sec-line"></div>
         </div>
         <div class="card" style="padding: 0.75rem;">
-          <div class="match-list">
-            <div class="match-row">
-              <div class="match-player">J. Vermeulen</div>
-              <div class="match-vs">vs</div>
-              <div class="match-player right">S. Koen</div>
-              <div class="match-date">May 10</div>
-            </div>
-            <div class="match-row">
-              <div class="match-player">L. De Backer</div>
-              <div class="match-vs">vs</div>
-              <div class="match-player right">A. Martens</div>
-              <div class="match-date">May 12</div>
-            </div>
-            <div class="match-row">
-              <div class="match-player">T. Peeters</div>
-              <div class="match-vs">vs</div>
-              <div class="match-player right">J. Vermeulen</div>
-              <div class="match-date">May 17</div>
-            </div>
-            <div class="match-row">
-              <div class="match-player">S. Koen</div>
-              <div class="match-vs">vs</div>
-              <div class="match-player right">L. De Backer</div>
-              <div class="match-date">May 20</div>
-            </div>
+          <div class="match-list" id="match-list">
+            <div class="lb-loading"><span>Loading matches…</span></div>
           </div>
         </div>
       </section>
@@ -656,7 +553,7 @@
   </footer>
 
   <script>
-    // Build checkerboard bg
+    // Checkerboard achtergrond
     const board = document.getElementById('board');
     for (let r = 0; r < 12; r++) {
       for (let c = 0; c < 12; c++) {
@@ -665,6 +562,130 @@
         board.appendChild(sq);
       }
     }
+
+    const rankClass = ['gold', 'silver', 'bronze'];
+
+    function getInitials(voornaam, achternaam) {
+      const v = voornaam ? voornaam[0].toUpperCase() : '';
+      const a = achternaam ? achternaam[0].toUpperCase() : '';
+      return v + a;
+    }
+
+    // Alle data laden en alles invullen
+    function loadAll() {
+      fetch('http://localhost:5080/api/Speler')
+        .then(response => {
+          if (!response.ok) throw new Error('API niet bereikbaar');
+          return response.json();
+        })
+        .then(data => {
+          if (data.length === 0) {
+            document.getElementById('leaderboard-body').innerHTML =
+              '<div class="lb-loading"><span>Geen spelers gevonden.</span></div>';
+            document.getElementById('spotlight-card').innerHTML =
+              '<div class="lb-loading"><span>Geen spelers gevonden.</span></div>';
+            document.getElementById('match-list').innerHTML =
+              '<div class="lb-loading"><span>Geen spelers gevonden.</span></div>';
+            return;
+          }
+
+          // Sorteer op fideId hoogste eerst
+          data.sort((a, b) => (b.fideId || 0) - (a.fideId || 0));
+
+          // ── LEADERBOARD ──
+          const body = document.getElementById('leaderboard-body');
+          body.innerHTML = '';
+          data.forEach((speler, index) => {
+            const rClass = rankClass[index] || '';
+            const initials = getInitials(speler.voornaam, speler.achternaam);
+            const naam = `${speler.voornaam || ''} ${speler.achternaam || ''}`.trim();
+            const row = document.createElement('div');
+            row.className = 'lb-row data-row';
+            row.style.animationDelay = `${index * 0.06}s`;
+            row.innerHTML = `
+              <div class="lb-rank ${rClass}">${index + 1}</div>
+              <div class="lb-name">
+                <div class="lb-avatar">${initials}</div>
+                ${naam}
+              </div>
+              <div class="lb-val">${speler.land || '—'}</div>
+              <div class="lb-val">${speler.geslacht || '—'}</div>
+              <div class="lb-elo">${speler.fideId || '—'}</div>
+            `;
+            body.appendChild(row);
+          });
+
+          // ── SPOTLIGHT — #1 speler ──
+          const top = data[0];
+          const topNaam = `${top.voornaam || ''} ${top.achternaam || ''}`.trim();
+          const topInitials = getInitials(top.voornaam, top.achternaam);
+          document.getElementById('spotlight-card').innerHTML = `
+            <div class="spotlight-header">
+              <div class="spotlight-avatar">${topInitials}</div>
+              <div>
+                <div class="spotlight-name">${topNaam}</div>
+                <div class="spotlight-title">#1 ranked · ${top.land || 'Onbekend'}</div>
+              </div>
+            </div>
+            <div class="spotlight-stats">
+              <div class="sp-stat">
+                <div class="sp-stat-val">${top.fideId || '—'}</div>
+                <div class="sp-stat-label">FIDE ID</div>
+              </div>
+              <div class="sp-stat">
+                <div class="sp-stat-val">${top.geslacht || '—'}</div>
+                <div class="sp-stat-label">Geslacht</div>
+              </div>
+              <div class="sp-stat">
+                <div class="sp-stat-val">${top.geboortejaar || '—'}</div>
+                <div class="sp-stat-label">Geboortejaar</div>
+              </div>
+            </div>
+            <p class="sp-quote">"Control the center, and the rest of the board will follow."</p>
+          `;
+
+          // ── UPCOMING MATCHES — koppel spelers uit de lijst ──
+          const matchList = document.getElementById('match-list');
+          matchList.innerHTML = '';
+
+          // Maak paren van opeenvolgende spelers (1vs2, 3vs4, enz.)
+          // Max 4 matches tonen
+          const maxMatches = Math.min(4, Math.floor(data.length / 2));
+
+          if (maxMatches === 0) {
+            matchList.innerHTML = '<div class="lb-loading"><span>Niet genoeg spelers voor matches.</span></div>';
+            return;
+          }
+
+          for (let i = 0; i < maxMatches; i++) {
+            const wit = data[i * 2];
+            const zwart = data[i * 2 + 1];
+            const witNaam = `${wit.voornaam || ''} ${wit.achternaam || ''}`.trim();
+            const zwartNaam = `${zwart.voornaam || ''} ${zwart.achternaam || ''}`.trim();
+
+            const row = document.createElement('div');
+            row.className = 'match-row';
+            row.innerHTML = `
+              <div class="match-player">${witNaam}</div>
+              <div class="match-vs">vs</div>
+              <div class="match-player right">${zwartNaam}</div>
+              <div class="match-date">Ronde ${i + 1}</div>
+            `;
+            matchList.appendChild(row);
+          }
+        })
+        .catch(err => {
+          document.getElementById('leaderboard-body').innerHTML =
+            '<div class="lb-loading"><span>Kon spelers niet laden — is de backend actief?</span></div>';
+          document.getElementById('spotlight-card').innerHTML =
+            '<div class="lb-loading"><span>Kon spelers niet laden.</span></div>';
+          document.getElementById('match-list').innerHTML =
+            '<div class="lb-loading"><span>Kon spelers niet laden.</span></div>';
+          console.error('Laad fout:', err);
+        });
+    }
+
+    loadAll();
   </script>
 
 </body>

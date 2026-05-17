@@ -7,19 +7,19 @@ document.getElementById("load-spel").addEventListener("click", function()
             let results = document.getElementById("results");
             results.innerHTML = "";
             data.forEach(item => {
-                let div = document.createElement("div");
-                div.className = "Get-Spel";
-                div.innerHTML = `
-                    <h3>${item.spel_id}</h3>
-                    <p>ToernooiID: ${item.toernooi_id}</p>
-                    <p>RondeID: ${item.ronde_id}</p>
-                    <p>WhiteSpeler: ${item.white_speler_id}</p>
-                    <p>ZwarteSpeler: ${item.black_speler_id}</p>
-                    <p>Resultaat: ${item.resultaat}</p>
-                    <p>SchaakbordNummer: ${item.schaakbord_nummer}</p>
-                `;
-                results.appendChild(div);
-            });
+            let div = document.createElement("div");
+             div.className = "Get-Spel";
+             div.innerHTML = `
+        <h3>${item.spelId}</h3>
+        <p>ToernooiID: ${item.toernooiId}</p>
+        <p>RondeID: ${item.rondeId}</p>
+        <p>WhiteSpeler: ${item.whiteSpelerId}</p>
+        <p>ZwarteSpeler: ${item.blackSpelerId}</p>
+        <p>Resultaat: ${item.resultaat}</p>
+        <p>SchaakbordNummer: ${item.schaakbordNummer}</p>
+    `;
+    results.appendChild(div);
+});
         })
         .catch(error => console.error('Error fetching data:', error));
 });
@@ -49,7 +49,7 @@ document.getElementById("add-spel").addEventListener("click", function() {
         })
         .then(data => {
             console.log('Spel toegevoegd:', data);
-            alert(`Spel ${data.spel_id} succesvol toegevoegd!`);
+           alert(`Spel ${data.spelId} succesvol toegevoegd!`);
         })
         .catch(error => console.error('Error posting data:', error));
 });
